@@ -14,9 +14,10 @@
     vtype: "select"
 
 - name: Add Multiverse Repo
-  ansible.builtin.apt_repository:
-    repo: multiverse
+  apt_repository:
+    repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
     state: present
+    update_cache: True
 
 - name: Set 32-bit Architecture
   shell:
@@ -45,7 +46,7 @@
     group: steam
 
 - name: Create Required Directories
-  ansible.builtin.file:
+  file:
     path: "{{ item }}"
     state: directory
     owner: steam
@@ -57,7 +58,7 @@
       - ~/.steam/sdk64
 
 - name: Symlink Steam Client
-  ansible.builtin.file:
+  file:
     src: ../steamcmd/linux64/steamclient.so
     dest: ~/.steam/sdk64
     state: link
