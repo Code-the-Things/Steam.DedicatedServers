@@ -29,7 +29,7 @@
 
 - name: Create Required Directories
   ansible.builtin.file:
-    path: {{ item }}
+    path: "{{ item }}"
     state: directory
     owner: root
     loop:
