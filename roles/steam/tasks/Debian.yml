@@ -17,7 +17,7 @@
   apt_repository:
     repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
     state: present
-    update_cache: True
+    update_cache: true
 
 - name: Set 32-bit Architecture
   shell:
