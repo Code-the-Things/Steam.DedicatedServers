@@ -1,0 +1,13 @@
+---
+  - name: Install Steam Dedicated Server
+    hosts: all
+    gather_facts: true
+    become: true
+    vars:
+      steam: true
+      serverType: CoreKeeper
+  
+    tasks:
+      - include_role:
+          name: steam
+        when: steam

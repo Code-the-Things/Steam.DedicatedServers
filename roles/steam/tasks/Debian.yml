@@ -1,0 +1,44 @@
+---
+- name: Answer Steam Questions
+  shell:
+    cmd: |
+      echo steam steam/question select "I AGREE" | debconf-set-selections
+      echo steam steam/license note "" | debconf-set-selections
+
+- name: Add Multiverse Repo
+  ansible.builtin.apt_repository:
+    repo: multiverse
+    state: present
+
+- name: Add Architecture
+  shell:
+    cmd: |
+      dpkg --add-architecture i386
+
+- name: Install Required Packages
+  package:
+    name:
+      - lib32gcc-s1
+      - tmux
+      - screen
+      - vim
+      - net-tools
+      - jq
+      - steamcmd
+    state: present
+
+- name: Create Required Directories
+  ansible.builtin.file:
+    path: {{ item }}
+    state: directory
+    owner: root
+    loop:
+      - /steam/morpheus
+      - /steam/server
+      - ~/.steam/sdk64
+
+- name: Fix symlink for Steam
+  ansible.builtin.file:
+    src: ../steamcmd/linux64/steamclient.so
+    dest: ~/.steam/sdk64
+    state: link
