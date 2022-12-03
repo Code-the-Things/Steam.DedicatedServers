@@ -15,9 +15,9 @@
 
 - name: Add Multiverse Repo
   apt_repository:
-    repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
+    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse"
     state: present
-    update_cache: true
+    update_cache: yes
 
 - name: Set 32-bit Architecture
   shell:
@@ -52,10 +52,10 @@
     owner: steam
     group: steam
     mode: 0777
-    loop:
-      - /steam/morpheus
-      - /steam/server
-      - ~/.steam/sdk64
+  loop:
+    - /steam/morpheus
+    - /steam/server
+    - ~/.steam/sdk64
 
 - name: Symlink Steam Client
   file:
