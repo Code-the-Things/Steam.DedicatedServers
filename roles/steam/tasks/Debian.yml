@@ -15,7 +15,7 @@
 
 - name: Add Multiverse Repo
   apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse"
+    repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
     state: present
     update_cache: yes
 
