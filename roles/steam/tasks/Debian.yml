@@ -55,11 +55,7 @@
     - /steam/server
     - ~/.steam/sdk64
 
-# - name: Symlink Steam Client
-#   file:
-#     src: ../steamcmd/linux64/steamclient.so
-#     dest: ~/.steam/sdk64
-#     state: link
-#     owner: steam
-#     group: steam
-#     mode: 0777
+- name: Symlink Steam Client
+  shell:
+    cmd: |
+      ln -s /usr/games/steamcmd steamcmd
