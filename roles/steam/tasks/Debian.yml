@@ -54,8 +54,3 @@
     - /steam/morpheus
     - /steam/server
     - ~/.steam/sdk64
-
-- name: Symlink Steam Client
-  shell:
-    cmd: |
-      ln -s /usr/games/steamcmd steamcmd

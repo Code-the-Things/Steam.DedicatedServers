@@ -3,7 +3,7 @@
   shell:
     cmd: |
       steamcmd +login anonymous +force_install_dir '/steam/server' +app_update 222860 -validate +quit
-  become: yes
+  become: true
   become_user: steam
 
 - name: Install Metamod
@@ -11,7 +11,7 @@
     src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
     dest: /steam/server/left4dead2
     remote_src: yes
-  become: yes
+  become: true
   become_user: steam
 
 - name: Install Sourcemod
@@ -19,7 +19,7 @@
     src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
     dest: /steam/server/left4dead2
     remote_src: yes
-  become: yes
+  become: true
   become_user: steam
 
 - name: Symlink Server Config
@@ -84,3 +84,10 @@
     owner: steam
     group: steam
     mode: 0777
+
+- name: fix file permissions as necissary
+  file:
+    path: /steam/server
+    owner: steam
+    group: steam
+    recurse: true
