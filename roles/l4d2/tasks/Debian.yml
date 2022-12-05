@@ -1,66 +1,80 @@
 ---
-- name: Install Required Packages
-  package:
-    name:
-      - screen
-      - glibc.i686
-      - libstdc++.i686
-    state: present
-
-- name: Steam License Note
-  debconf:
-    name: "steam"
-    question: "steam/license"
-    value: ""
-    vtype: "select"
-
-- name: Set 32-bit Architecture
+- name: Install L4D2
   shell:
     cmd: |
-      dpkg --add-architecture i386
+      steamcmd +login anonymous +force_install_dir '/steam/server' +app_update 222860 -validate +quit
 
-- name: Add Multiverse Repo
-  apt_repository:
-    repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
-    state: present
-    update_cache: yes
+- name: Install Metamod
+  ansible.builtin.unarchive:
+    src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
+    dest: /steam/server/left4dead2
+    remote_src: yes
 
-- name: Install Required Packages
-  package:
-    name:
-      - lib32gcc-s1
-      - tmux
-      - screen
-      - steamcmd
-      - software-properties-common
-    state: present
-  
-- name: Create Steam Group
-  group: 
-    name: steam
+- name: Install Sourcemod
+  ansible.builtin.unarchive:
+    src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
+    dest: /steam/server/left4dead2
+    remote_src: yes
 
-- name: Create Steam User
-  user:
-    name: steam
-    group: steam
-
-- name: Create Required Directories
+- name: Symlink Server Config
   file:
-    path: "{{ item }}"
-    state: directory
+    src: /steam/morpheus/server.cfg
+    dest: /steam/server/left4dead2/cfg/server.cfg
+    state: link
     owner: steam
     group: steam
     mode: 0777
-  loop:
-    - /steam/morpheus
-    - /steam/server
-    - ~/.steam/sdk64
 
-# - name: Symlink Steam Client
-#   file:
-#     src: ../steamcmd/linux64/steamclient.so
-#     dest: ~/.steam/sdk64
-#     state: link
-#     owner: steam
-#     group: steam
-#     mode: 0777
+- name: Symlink Server Config
+  file:
+    src: /steam/morpheus/banned_user.cfg
+    dest: /steam/server/left4dead2/cfg/banned_user.cfg
+    state: link
+    owner: steam
+    group: steam
+    mode: 0777
+
+- name: Symlink Server Config
+  file:
+    src: /steam/morpheus/banned_ip.cfg
+    dest: /steam/server/left4dead2/cfg/banned_ip.cfg
+    state: link
+    owner: steam
+    group: steam
+    mode: 0777
+
+- name: Symlink Server Config
+  file:
+    src: /steam/morpheus/motd.txt
+    dest: /steam/server/left4dead2/motd.txt
+    state: link
+    owner: steam
+    group: steam
+    mode: 0777
+  
+- name: Symlink Server Config
+  file:
+    src: /steam/morpheus/metamod.vdf
+    dest: /steam/server/left4dead2/addons/metamod.vdf
+    state: link
+    owner: steam
+    group: steam
+    mode: 0777
+
+- name: Symlink Server Config
+  file:
+    src: /steam/morpheus/host.txt
+    dest: /steam/server/left4dead2/host.txt
+    state: link
+    owner: steam
+    group: steam
+    mode: 0777
+
+- name: Symlink Server Config
+  file:
+    src: /steam/morpheus/admins_simple.ini
+    dest: /steam/server/left4dead2/addons/sourcemod/configs/admins_simple.ini
+    state: link
+    owner: steam
+    group: steam
+    mode: 0777

@@ -5,9 +5,11 @@
     become: true
     vars:
       steam: true
-      serverType: CoreKeeper
+      serverType: l4d2
   
     tasks:
       - include_role:
           name: steam
-        when: steam
+      - include_role:
+          name: l4d2
+        when: serverType == "l4d2"
