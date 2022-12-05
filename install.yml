@@ -4,7 +4,6 @@
     gather_facts: true
     become: true
     vars:
-      steam: true
       serverType: "{{ morpheus['instance']['layoutName'] }}"
   
     tasks:
