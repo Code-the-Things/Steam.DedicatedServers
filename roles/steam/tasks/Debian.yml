@@ -13,20 +13,20 @@
     value: ""
     vtype: "select"
 
+- name: Set 32-bit Architecture
+  shell:
+    cmd: |
+      dpkg --add-architecture i386
+
 - name: Add Multiverse Repo
   apt_repository:
     repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
     state: present
     update_cache: yes
 
-- name: Set 32-bit Architecture
-  shell:
-    cmd: |
-      dpkg --add-architecture i386
-
 - name: Install Required Packages
-  apt:
-    pkg:
+  package:
+    name:
       - lib32gcc-s1
       - tmux
       - screen
