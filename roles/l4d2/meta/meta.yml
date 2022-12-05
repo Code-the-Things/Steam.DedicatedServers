@@ -1,0 +1,28 @@
+galaxy_info:
+  role_name: l4d2
+  author: Chris Bunge
+  description: Installs Left 4 Dead 2 Steam Dedicated Servers on Ubuntu Hosts
+  company: Code the Things
+
+  # Some suggested licenses:
+  # - BSD (default)
+  # - MIT
+  # - GPLv2
+  # - GPLv3
+  # - Apache
+  # - CC-BY
+  license: license (GPLv2, CC-BY, etc)
+
+  min_ansible_version: 2.9
+
+  github_branch: main
+
+  platforms:
+    - name: Ubuntu
+      versions:
+      - focal
+      - bionic
+      - jammy
+
+  galaxy_tags:
+    - l4d2

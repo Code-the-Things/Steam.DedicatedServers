@@ -1,0 +1,16 @@
+---
+  METAVER: '1.11'
+  METASOURCE: 'mmsource-1.11.0-git1148-linux.tar.gz'
+  SOURCEMODSOURCE: 'sourcemod-1.11.0-git6923-linux.tar.gz'
+  SOURCEMODVER: '1.11'
+
+  SERVERID: '1963720'
+
+  BACKUP: "{{ morpheus['customOptions']['steamBackup'] }}"
+  NEWBACKUP: "{{ morpheus['customOptions']['newSteamBackup'] }}"
+
+  URL: "{{ morpheus['morpheus']['applianceUrl'] }}"
+  TOKEN: "{{ morpheus['morpheus']['apiAccessToken'] }}"
+  OPTIONLIST: '321'
+  JOBID: '8217'
+  INSTANCEID: "{{ morpheus['instance']['id'] }}"
