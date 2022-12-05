@@ -64,5 +64,5 @@
     dest: ~/.steam/sdk64
     state: link
     owner: steam
-    groupt: steam
+    group: steam
     mode: 0777
