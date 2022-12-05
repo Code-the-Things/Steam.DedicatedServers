@@ -5,7 +5,7 @@
     become: true
     vars:
       steam: true
-      serverType: "{{ morpheus['instance']['instanceVersion'] }}"
+      serverType: "{{ morpheus['instance']['layoutName'] }}"
   
     tasks:
       - include_role:
