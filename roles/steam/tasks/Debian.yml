@@ -54,3 +54,12 @@
     - /steam/morpheus
     - /steam/server
     - ~/.steam/sdk64
+
+- name: Link steamcmd executable
+  file:
+    src: /usr/games/steamcmd
+    dest: /home/steam/steamcmd
+    state: link
+    owner: steam
+    group: steam
+    mode: 0774
