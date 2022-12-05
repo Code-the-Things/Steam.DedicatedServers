@@ -30,6 +30,7 @@
     owner: steam
     group: steam
     mode: 0777
+    force: true
 
 - name: Symlink Server Config
   file:
@@ -39,6 +40,7 @@
     owner: steam
     group: steam
     mode: 0777
+    force: true
 
 - name: Symlink Server Config
   file:
@@ -48,6 +50,7 @@
     owner: steam
     group: steam
     mode: 0777
+    force: true
 
 - name: Symlink Server Config
   file:
@@ -57,6 +60,7 @@
     owner: steam
     group: steam
     mode: 0777
+    force: true
   
 - name: Symlink Server Config
   file:
@@ -66,6 +70,7 @@
     owner: steam
     group: steam
     mode: 0777
+    force: true
 
 - name: Symlink Server Config
   file:
@@ -75,6 +80,7 @@
     owner: steam
     group: steam
     mode: 0777
+    force: true
 
 - name: Symlink Server Config
   file:
@@ -84,6 +90,7 @@
     owner: steam
     group: steam
     mode: 0777
+    force: true
 
 - name: fix file permissions as necissary
   file:
