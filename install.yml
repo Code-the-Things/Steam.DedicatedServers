@@ -5,7 +5,7 @@
     become: true
     vars:
       steam: true
-      serverType: l4d2
+      serverType: "{{ morpheus['instance']['instanceVersion'] }}"
   
     tasks:
       - include_role:
