@@ -2,7 +2,7 @@
 - name: Install L4D2
   shell:
     cmd: |
-      steamcmd +login anonymous +force_install_dir '/steam/server' +app_update 222860 -validate +quit
+      /usr/games/steamcmd +login anonymous +force_install_dir '/steam/server' +app_update 222860 -validate +quit
   become: true
   become_user: steam
 
