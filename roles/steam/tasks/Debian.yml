@@ -17,6 +17,10 @@
   apt_repository:
     repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
     state: present
+    update_cache: no
+
+- name: Refresh Repo
+  apt:
     update_cache: yes
 
 - name: Set 32-bit Architecture
@@ -30,9 +34,6 @@
       - lib32gcc-s1
       - tmux
       - screen
-      - vim
-      - net-tools
-      - jq
       - steamcmd
     state: present
   
