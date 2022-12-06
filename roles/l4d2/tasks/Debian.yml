@@ -61,16 +61,6 @@
     group: steam
     mode: 0777
     force: true
-  
-- name: Symlink Server Config
-  file:
-    src: /steam/morpheus/metamod.vdf
-    dest: /steam/server/left4dead2/addons/metamod.vdf
-    state: link
-    owner: steam
-    group: steam
-    mode: 0777
-    force: true
 
 - name: Symlink Server Config
   file:
