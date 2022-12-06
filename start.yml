@@ -1,12 +1,12 @@
 ---
-  - name: Start L4D2 Server
+  - name: Start Steam Server
     hosts: all
     gather_facts: true
     become: true
     become_user: steam
 
     tasks:
-      - name: Start L4D2 Server
+      - name: Start Steam Server
         shell:
           cmd: |
             /steam/start.sh
