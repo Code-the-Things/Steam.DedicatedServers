@@ -54,7 +54,7 @@
     - /steam/morpheus
     - /steam/server
     - /home/steam/.steam/sdk64
-    - /home/steam/.steam/sdk32/
+    - /home/steam/.steam/sdk32
 
 - name: Link steamcmd executable
   file:
@@ -70,6 +70,16 @@
   file:
     src: /steam/server/bin/steamclient.so
     dest: /home/steam/.steam/sdk32/steamclient.so
+    state: link
+    owner: steam
+    group: steam
+    mode: 0777
+    force: true
+
+- name: Symlink Server Config
+  file:
+    src: /steam/server/bin/steamclient.so
+    dest: /home/steam/.steam/sdk64/steamclient.so
     state: link
     owner: steam
     group: steam
