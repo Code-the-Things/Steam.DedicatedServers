@@ -6,6 +6,8 @@
 
   SERVERID: '1963720'
 
+  STEAMPORT: "{{ morpheus['customOptions']['steamPort'] }}"
+
   BACKUP: "{{ morpheus['customOptions']['steamBackup'] }}"
   NEWBACKUP: "{{ morpheus['customOptions']['newSteamBackup'] }}"
 
