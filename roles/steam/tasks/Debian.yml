@@ -64,6 +64,7 @@
     owner: steam
     group: steam
     mode: 0774
+    force: true
 
 - name: Symlink Server Config
   file:

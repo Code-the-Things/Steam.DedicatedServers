@@ -12,3 +12,9 @@
       - include_role:
           name: l4d2
         when: serverType == "L4D2"
+      - include_role:
+          name: corekeeper
+        when: serverType == "Core Keeper"
+      - include_role:
+          name: valheim
+        when: serverType == "Valheim" 
