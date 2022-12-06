@@ -4,9 +4,11 @@
   SOURCEMODSOURCE: 'sourcemod-1.11.0-git6923-linux.tar.gz'
   SOURCEMODVER: '1.11'
 
-  SERVERID: '222860'
+  SERVERID: '896660'
 
   STEAMPORT: "{{ morpheus['customOptions']['steamPort'] }}"
+  WORLD: "{{ morpheus['customOptions']['world'] }}"
+  PASSWORD: "{{ morpheus['customOptions']['password'] }}"
 
   BACKUP: "{{ morpheus['customOptions']['steamBackup'] }}"
   NEWBACKUP: "{{ morpheus['customOptions']['newSteamBackup'] }}"

@@ -2,7 +2,7 @@
 - name: Install L4D2
   shell:
     cmd: |
-      /usr/games/steamcmd +login anonymous +force_install_dir '/steam/server' +app_update 222860 -validate +quit
+      /usr/games/steamcmd +login anonymous +force_install_dir '/steam/server' +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 
@@ -92,14 +92,14 @@
     mode: 0777
     force: true
 
-- name: Creating a file with content
+- name: Creating Start Script
   copy:
     dest: /steam/start.sh
     content: |
       /steam/server/srcds_run -game left4dead2 +exec server.cfg +port {{ STEAMPORT }} +maxplayers 8 -tickrate 100 -pingboost 2 +map c1m1_hotel > /dev/null 2>&1 &
     mode: a+x
 
-- name: fix file permissions as necissary
+- name: Fix File Permissions
   file:
     path: /steam/
     owner: steam

@@ -1,0 +1,87 @@
+---
+  - name: Install Valheim
+    shell:
+      cmd: |
+        /usr/games/steamcmd +login anonymous +force_install_dir '/steam/server' +app_update {{ SERVERID }} -validate +quit
+    become: true
+    become_user: steam
+  
+  - name: Install Metamod
+    ansible.builtin.unarchive:
+      src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
+      dest: /steam/server
+      remote_src: yes
+    become: true
+    become_user: steam
+  
+  - name: Install Sourcemod
+    ansible.builtin.unarchive:
+      src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
+      dest: /steam/server
+      remote_src: yes
+    become: true
+    become_user: steam
+  
+  - name: Symlink Server Config
+    file:
+      src: /steam/morpheus/server.cfg
+      dest: /steam/server/cfg/server.cfg
+      state: link
+      owner: steam
+      group: steam
+      mode: 0777
+      force: true
+  
+  - name: Symlink Server Config
+    file:
+      src: /steam/morpheus/banned_user.cfg
+      dest: /steam/server/cfg/banned_user.cfg
+      state: link
+      owner: steam
+      group: steam
+      mode: 0777
+      force: true
+  
+  - name: Symlink Server Config
+    file:
+      src: /steam/morpheus/banned_ip.cfg
+      dest: /steam/server/cfg/banned_ip.cfg
+      state: link
+      owner: steam
+      group: steam
+      mode: 0777
+      force: true
+    
+  - name: Symlink Server Config
+    file:
+      src: /steam/morpheus/metamod.vdf
+      dest: /steam/server/addons/metamod.vdf
+      state: link
+      owner: steam
+      group: steam
+      mode: 0777
+      force: true
+  
+  - name: Symlink Server Config
+    file:
+      src: /steam/morpheus/admins_simple.ini
+      dest: /steam/server/addons/sourcemod/configs/admins_simple.ini
+      state: link
+      owner: steam
+      group: steam
+      mode: 0777
+      force: true
+  
+  - name: Creating Start Script
+    copy:
+      dest: /steam/start.sh
+      content: |
+        ./server/valheim_server.x86_64 -name "Code the Things - {{ INSTANCEID }}" -port {{ PORT }} -world "{{ WORLD }}" -password "{{ PASSWORD }}"
+      mode: a+x
+  
+  - name: Fix File Permissions
+    file:
+      path: /steam/
+      owner: steam
+      group: steam
+      recurse: true

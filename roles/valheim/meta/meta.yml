@@ -1,7 +1,7 @@
 galaxy_info:
-  role_name: l4d2
+  role_name: valheim
   author: Chris Bunge
-  description: Installs Left 4 Dead 2 Steam Dedicated Servers on Ubuntu Hosts
+  description: Installs Valheim Steam Dedicated Server
   company: Code the Things
 
   # Some suggested licenses:
@@ -25,6 +25,6 @@ galaxy_info:
       - jammy
 
   galaxy_tags:
-    - l4d2
+    - valheim
     - steam
     - gaming
