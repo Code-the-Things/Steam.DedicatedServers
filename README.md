@@ -11,6 +11,8 @@ The following Steam Dedicated Servers are supported:
 
 Additional Steam Dedicated Servers can easily be added with minor variable changes.
 
+A common `start.yml` file is included to launch each server instance via automation.
+
 # Planned
 * Dynamic NFS mounts for backup/restore of game files.
 * Dynamic add/remove from backup scheduling.
