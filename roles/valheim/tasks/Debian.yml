@@ -66,7 +66,7 @@
     copy:
       dest: /steam/start.sh
       content: |
-        ./server/valheim_server.x86_64 -name "Code the Things - {{ INSTANCEID }}" -port {{ STEAMPORT }} -world "{{ WORLD }}" -password '{{ PASSWORD }}'
+        ./steam/server/valheim_server.x86_64 -name "Code the Things - {{ INSTANCEID }}" -port {{ STEAMPORT }} -world "{{ WORLD }}" -password '{{ PASSWORD }}'
       mode: a+x
   
   - name: Fix File Permissions
