@@ -32,7 +32,7 @@
     mode: 0777
     force: true
 
-- name: Symlink Server Config
+- name: Symlink Banned User Config
   file:
     src: /steam/morpheus/banned_user.cfg
     dest: /steam/server/left4dead2/cfg/banned_user.cfg
@@ -42,7 +42,7 @@
     mode: 0777
     force: true
 
-- name: Symlink Server Config
+- name: Symlink Banned IP Config
   file:
     src: /steam/morpheus/banned_ip.cfg
     dest: /steam/server/left4dead2/cfg/banned_ip.cfg
@@ -52,7 +52,7 @@
     mode: 0777
     force: true
 
-- name: Symlink Server Config
+- name: Symlink MOTD Config
   file:
     src: /steam/morpheus/motd.txt
     dest: /steam/server/left4dead2/motd.txt
@@ -62,7 +62,7 @@
     mode: 0777
     force: true
 
-- name: Symlink Server Config
+- name: Symlink Host Config
   file:
     src: /steam/morpheus/host.txt
     dest: /steam/server/left4dead2/host.txt
@@ -72,7 +72,7 @@
     mode: 0777
     force: true
 
-- name: Symlink Server Config
+- name: Symlink Admin Config
   file:
     src: /steam/morpheus/admins_simple.ini
     dest: /steam/server/left4dead2/addons/sourcemod/configs/admins_simple.ini

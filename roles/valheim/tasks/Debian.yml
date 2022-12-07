@@ -22,17 +22,7 @@
     become: true
     become_user: steam
   
-  - name: Symlink Server Config
-    file:
-      src: /steam/morpheus/server.cfg
-      dest: /steam/server/cfg/server.cfg
-      state: link
-      owner: steam
-      group: steam
-      mode: 0777
-      force: true
-  
-  - name: Symlink Server Config
+  - name: Symlink Banned User Config
     file:
       src: /steam/morpheus/banned_user.cfg
       dest: /steam/server/cfg/banned_user.cfg
@@ -42,7 +32,7 @@
       mode: 0777
       force: true
   
-  - name: Symlink Server Config
+  - name: Symlink Banned IP Config
     file:
       src: /steam/morpheus/banned_ip.cfg
       dest: /steam/server/cfg/banned_ip.cfg
@@ -52,7 +42,7 @@
       mode: 0777
       force: true
   
-  - name: Symlink Server Config
+  - name: Symlink Admin Config
     file:
       src: /steam/morpheus/admins_simple.ini
       dest: /steam/server/addons/sourcemod/configs/admins_simple.ini

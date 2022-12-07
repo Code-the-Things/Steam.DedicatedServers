@@ -8,9 +8,4 @@
 
   STEAMPORT: "{{ morpheus['customOptions']['steamPort'] }}"
 
-  BACKUP: "{{ morpheus['customOptions']['steamBackup'] }}"
-  NEWBACKUP: "{{ morpheus['customOptions']['newSteamBackup'] }}"
-
-  URL: "{{ morpheus['morpheus']['applianceUrl'] }}"
-  TOKEN: "{{ morpheus['morpheus']['apiAccessToken'] }}"
   INSTANCEID: "{{ morpheus['instance']['id'] }}"
