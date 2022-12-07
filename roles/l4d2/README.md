@@ -4,7 +4,7 @@ Left 4 Dead 2 is a 2009 multiplayer survival horror game developed and published
 ![L4D2](https://static.wikia.nocookie.net/left4dead/images/6/6c/Dark_Carnival02.png)
 
 # Role Variables
-| Ansible Variable | Morpheus Field Name | Description | Default |
+| Ansible Variable | Morpheus Variable | Description | Default |
 | --- | --- | --- | --- |
 |`METAVER`||MetaMod Version to Install.| `1.11` |
 |`METASOURCE`||MetaMod Installer Package.| `mmsource-1.11.0-git1148-linux.tar.gz` |
