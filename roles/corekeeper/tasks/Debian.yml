@@ -56,7 +56,7 @@
     copy:
       dest: /steam/start.sh
       content: |
-        /home/steam/corekeeper/_launch.sh
+        /steam/server/_launch.sh
       mode: a+x
   
   - name: Fix File Permissions
