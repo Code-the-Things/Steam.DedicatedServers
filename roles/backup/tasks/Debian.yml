@@ -27,7 +27,7 @@
 
   - name: Update Dataset
     json_patch:
-      src: {{ oldata }}
+      src: '{{ oldata }}'
       operations:
         - op: add
           path: "/optionTypeList/initialDataset/{{ BACKUP }}"
@@ -43,7 +43,7 @@
       headers:
         Authorization: "BEARER {{ MORPHTOKEN }}"
       body:
-        {{ oldata }}
+        '{{ oldata }}'
 
 
   # - name: Update Option List Values
