@@ -1,4 +1,8 @@
 ---
+  - set_fact:
+      BACKUP: "{{ NEWBACKUP }}"
+    when: BACKUP is "New"
+
   - name: Install Required Packages
     package:
       name:
@@ -12,36 +16,44 @@
       owner: steam
       group: steam
       mode: 0644
-    when: BACKUP != 'New'
 
-  - name: Create Backup Directory
-    file:
-      path: '/backups/{{ NEWBACKUP }}'
-      state: directory
-      owner: steam
-      group: steam
-      mode: 0644
-    when: BACKUP == 'New'
-    
+  - name: Get Option List
+    uri:
+      method: GET
+      url: "{{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }}"
+      headers:
+        Authorization: "BEARER {{ MORPHTOKEN }}"
+    register: oldata
+
   - name: Update Option List Values
-    shell:
-      cmd: |
-        JSON=$(curl -X GET {{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}")
-        UPDATEDJSON=$(echo $JSON | jq .optionTypeList.initialDataset)
-        UPDATEDJSON=$(echo ${UPDATEDJSON::-6},\\r\\n {\\\"name\\\":\\\"{{ NEWBACKUP }}\\\", \\\"value\\\":\\\"{{ NEWBACKUP }}\\\"}\\r\\n]\")
-        JS=$(echo $JSON | jq ".optionTypeList.initialDataset = $UPDATEDJSON")
-        JS=$(echo $JS | jq 'del(.optionTypeList.id)')
+    json_patch:
+      src: {{ oldata }}
+      operations:
+        - op: add
+          path: "/optionTypeList/initialDataset/{{ BACKUP }}"
+          value: "{{ BACKUP }}"
+      pretty: yes
+      create: yes
 
-        curl -X PUT {{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}" --data "$JS"
+  # - name: Update Option List Values
+  #   shell:
+  #     cmd: |
+  #       JSON=$(curl -X GET {{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}")
+  #       UPDATEDJSON=$(echo $JSON | jq .optionTypeList.initialDataset)
+  #       UPDATEDJSON=$(echo ${UPDATEDJSON::-6},\\r\\n {\\\"name\\\":\\\"{{ NEWBACKUP }}\\\", \\\"value\\\":\\\"{{ NEWBACKUP }}\\\"}\\r\\n]\")
+  #       JS=$(echo $JSON | jq ".optionTypeList.initialDataset = $UPDATEDJSON")
+  #       JS=$(echo $JS | jq 'del(.optionTypeList.id)')
+
+  #       curl -X PUT {{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}" --data "$JS"
   
-    when: BACKUP == 'New'
+  #   when: BACKUP == 'New'
 
-  - name: Update Backup Job Targets
-    shell:
-      cmd: |
-        JSON=$(curl -X GET {{ MORPHURL }}api/jobs/{{ JOB }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}")
-        UPDATEDJSON=$(echo $JSON | jq .job.targets)
-        UPDATEDJSON=$(echo ${UPDATEDJSON::-1}, {\"refId\": $INSTANCEID}])
-        JS=$(echo $JSON | jq ".job.targets = $UPDATEDJSON")
+  # - name: Update Backup Job Targets
+  #   shell:
+  #     cmd: |
+  #       JSON=$(curl -X GET {{ MORPHURL }}api/jobs/{{ JOB }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}")
+  #       UPDATEDJSON=$(echo $JSON | jq .job.targets)
+  #       UPDATEDJSON=$(echo ${UPDATEDJSON::-1}, {\"refId\": $INSTANCEID}])
+  #       JS=$(echo $JSON | jq ".job.targets = $UPDATEDJSON")
 
-        curl -X PUT {{ MORPHURL }}api/jobs/{{ JOB }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}" --data "$JS"
+  #       curl -X PUT {{ MORPHURL }}api/jobs/{{ JOB }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}" --data "$JS"

@@ -8,5 +8,4 @@
     tasks:
       - name: Start Steam Server
         shell:
-          cmd: |
-            /steam/start.sh
+          /steam/start.sh
