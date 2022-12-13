@@ -25,7 +25,7 @@
         Authorization: "BEARER {{ MORPHTOKEN }}"
     register: oldata
 
-  - name: Update Option List Values
+  - name: Update Dataset
     json_patch:
       src: {{ oldata }}
       operations:
@@ -34,6 +34,17 @@
           value: "{{ BACKUP }}"
       pretty: yes
       create: yes
+
+  - name: Update Option List
+    uri:
+      method: PUT
+      body_format: json
+      url: "{{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }}"
+      headers:
+        Authorization: "BEARER {{ MORPHTOKEN }}"
+      body:
+        {{ oldata }}
+
 
   # - name: Update Option List Values
   #   shell:
