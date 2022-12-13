@@ -1,7 +1,7 @@
 ---
   - set_fact:
       BACKUP: "{{ NEWBACKUP }}"
-    when: BACKUP is "New"
+    when: BACKUP == "New"
 
   - name: Install Required Packages
     package:
