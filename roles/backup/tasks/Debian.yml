@@ -3,6 +3,10 @@
       BACKUP: "{{ NEWBACKUP }}"
     when: BACKUP == "New"
 
+  - name: Print BACKUP
+    debug:
+      msg: "{{ BACKUP }}"
+
   - name: Install Required Packages
     package:
       name:
@@ -23,11 +27,15 @@
       url: "{{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }}"
       headers:
         Authorization: "BEARER {{ MORPHTOKEN }}"
-    register: oldata
+    register: OLDATA
+
+  - name: Print OLDATA
+    debug:
+      msg: '{{ OLDATA }}'
 
   - name: Update Dataset
     json_patch:
-      src: '{{ oldata }}'
+      src: '{{ OLDATA }}'
       operations:
         - op: add
           path: "/optionTypeList/initialDataset/{{ BACKUP }}"
