@@ -4,17 +4,21 @@
     gather_facts: true
     become: true
     vars:
-      serverType: "{{ morpheus['instance']['layoutName'] }}"
+      SERVERTYPE: "{{ morpheus['instance']['layoutName'] }}"
+      BACKUP: "{{ morpheus['customOptions']['steamBackup'] }}"
   
     tasks:
       - include_role:
           name: steam
       - include_role:
           name: l4d2
-        when: serverType == "L4D2"
+        when: SERVERTYPE == "L4D2"
       - include_role:
           name: corekeeper
-        when: serverType == "Core Keeper"
+        when: SERVERTYPE == "Core Keeper"
       - include_role:
           name: valheim
-        when: serverType == "Valheim" 
+        when: SERVERTYPE == "Valheim" 
+      - include_role:
+          name: backup
+        when: (BACKUP != "None") and (BACKUP|length > 0)

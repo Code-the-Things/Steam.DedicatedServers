@@ -13,6 +13,12 @@ Additional Steam Dedicated Servers can easily be added with minor variable chang
 
 A common `start.yml` file is included to launch each server instance via automation.
 
+# Variables
+| Ansible Variable | Morpheus Variable | Description | Default |
+| --- | --- | --- | --- |
+|`SERVERTYPE`|instance.layoutName|Dedicated Server Type to Install||
+|`BACKUP`|customOptions.steamBackup|(Optional) Backup Folder Name to Mount||
+
 # Planned
 * Dynamic NFS mounts for backup/restore of game files.
 * Dynamic add/remove from backup scheduling.

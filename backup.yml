@@ -1,0 +1,21 @@
+---
+  - name: Run Steam Dedicated Server Backup Job
+    hosts: all
+    gather_facts: true
+    become: true
+    vars:
+      SERVERTYPE: "{{ morpheus['instance']['layoutName'] }}"
+      BACKUP: "{{ morpheus['customOptions']['steamBackup'] }}"
+
+    tasks:  
+      - name: Backup Core Keeper Files
+        community.general.archive:
+          path: /.config/unity3d/Pugstorm/Core\ Keeper/DedicatedServer/
+          dest: /backups/{{ BACKUP }}/dedicated.tgz
+        when: SERVERTYPE == "Core Keeper"
+
+      - name: Backup Valheim Files
+        community.general.archive:
+          path: /home/steam/.config/unity3d/IronGate/Valheim/worlds/
+          dest: /backups/{{ BACKUP }}/dedicated.tgz
+        when: SERVERTYPE == "Valheim"

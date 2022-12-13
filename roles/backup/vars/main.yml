@@ -1,0 +1,6 @@
+---
+  NEWBACKUP: "{{ morpheus['customOptions']['newSteamBackup'] }}"
+  MORPHURL: "{{ morpheus['morpheus']['applianceUrl'] }}"
+  MORPHTOKEN: "{{ morpheus['morpheus']['apiAccessToken'] }}"
+  OPTIONLIST: "{{ morpheus['customOptions']['optionList'] }}"
+  JOB: "{{ morpheus['customOptions']['job'] }}"

@@ -29,7 +29,7 @@
     state: link
     owner: steam
     group: steam
-    mode: 0777
+    mode: 0644
     force: true
 
 - name: Symlink Banned User Config
@@ -39,7 +39,7 @@
     state: link
     owner: steam
     group: steam
-    mode: 0777
+    mode: 0644
     force: true
 
 - name: Symlink Banned IP Config
@@ -49,7 +49,7 @@
     state: link
     owner: steam
     group: steam
-    mode: 0777
+    mode: 0644
     force: true
 
 - name: Symlink MOTD Config
@@ -59,7 +59,7 @@
     state: link
     owner: steam
     group: steam
-    mode: 0777
+    mode: 0644
     force: true
 
 - name: Symlink Host Config
@@ -69,7 +69,7 @@
     state: link
     owner: steam
     group: steam
-    mode: 0777
+    mode: 0644
     force: true
 
 - name: Symlink Admin Config
@@ -79,7 +79,7 @@
     state: link
     owner: steam
     group: steam
-    mode: 0777
+    mode: 0644
     force: true
 
 - name: Creating Start Script

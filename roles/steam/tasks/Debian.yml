@@ -1,87 +1,87 @@
 ---
-- name: Accept Steam License
-  debconf:
-    name: "steam"
-    question: "steam/question"
-    value: "I AGREE"
-    vtype: "select"
+  - name: Accept Steam License
+    debconf:
+      name: "steam"
+      question: "steam/question"
+      value: "I AGREE"
+      vtype: "select"
 
-- name: Steam License Note
-  debconf:
-    name: "steam"
-    question: "steam/license"
-    value: ""
-    vtype: "select"
+  - name: Steam License Note
+    debconf:
+      name: "steam"
+      question: "steam/license"
+      value: ""
+      vtype: "select"
 
-- name: Set 32-bit Architecture
-  shell:
-    cmd: |
-      dpkg --add-architecture i386
+  - name: Set 32-bit Architecture
+    shell:
+      cmd: |
+        dpkg --add-architecture i386
 
-- name: Add Multiverse Repo
-  apt_repository:
-    repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
-    state: present
-    update_cache: yes
+  - name: Add Multiverse Repo
+    apt_repository:
+      repo: deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse
+      state: present
+      update_cache: yes
 
-- name: Install Required Packages
-  package:
-    name:
-      - lib32gcc-s1
-      - tmux
-      - screen
-      - steamcmd
-      - software-properties-common
-    state: present
-  
-- name: Create Steam Group
-  group: 
-    name: steam
+  - name: Install Required Packages
+    package:
+      name:
+        - lib32gcc-s1
+        - tmux
+        - screen
+        - steamcmd
+        - software-properties-common
+      state: present
+    
+  - name: Create Steam Group
+    group: 
+      name: steam
 
-- name: Create Steam User
-  user:
-    name: steam
-    group: steam
+  - name: Create Steam User
+    user:
+      name: steam
+      group: steam
 
-- name: Create Required Directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: steam
-    group: steam
-    mode: 0777
-  loop:
-    - /steam/morpheus
-    - /steam/server
-    - /home/steam/.steam/sdk64
-    - /home/steam/.steam/sdk32
+  - name: Create Required Directories
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: steam
+      group: steam
+      mode: 0777
+    loop:
+      - /steam/morpheus
+      - /steam/server
+      - /home/steam/.steam/sdk64
+      - /home/steam/.steam/sdk32
 
-- name: Link steamcmd executable
-  file:
-    src: /usr/games/steamcmd
-    dest: /home/steam/steamcmd
-    state: link
-    owner: steam
-    group: steam
-    mode: 0774
-    force: true
+  - name: Link steamcmd executable
+    file:
+      src: /usr/games/steamcmd
+      dest: /home/steam/steamcmd
+      state: link
+      owner: steam
+      group: steam
+      mode: 0774
+      force: true
 
-- name: Symlink Server Config
-  file:
-    src: /steam/server/bin/steamclient.so
-    dest: /home/steam/.steam/sdk32/steamclient.so
-    state: link
-    owner: steam
-    group: steam
-    mode: 0777
-    force: true
+  - name: Symlink Server Config
+    file:
+      src: /steam/server/bin/steamclient.so
+      dest: /home/steam/.steam/sdk32/steamclient.so
+      state: link
+      owner: steam
+      group: steam
+      mode: 0777
+      force: true
 
-- name: Symlink Server Config
-  file:
-    src: /steam/server/bin/steamclient.so
-    dest: /home/steam/.steam/sdk64/steamclient.so
-    state: link
-    owner: steam
-    group: steam
-    mode: 0777
-    force: true
+  - name: Symlink Server Config
+    file:
+      src: /steam/server/bin/steamclient.so
+      dest: /home/steam/.steam/sdk64/steamclient.so
+      state: link
+      owner: steam
+      group: steam
+      mode: 0777
+      force: true

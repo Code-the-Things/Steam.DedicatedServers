@@ -1,0 +1,37 @@
+---
+  - name: Install Required Packages
+    package:
+      name:
+        - nfs-common
+      state: present
+
+  - name: Create Backup Directory
+    file:
+      path: '/backups/{{ BACKUP }}'
+      state: directory
+      owner: steam
+      group: steam
+      mode: 0777
+    
+  - name: Update Option List Values
+    shell:
+      cmd: |
+        JSON=$(curl -X GET {{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}")
+        UPDATEDJSON=$(echo $JSON | jq .optionTypeList.initialDataset)
+        UPDATEDJSON=$(echo ${UPDATEDJSON::-6},\\r\\n {\\\"name\\\":\\\"{{ NEWBACKUP }}\\\", \\\"value\\\":\\\"{{ NEWBACKUP }}\\\"}\\r\\n]\")
+        JS=$(echo $JSON | jq ".optionTypeList.initialDataset = $UPDATEDJSON")
+        JS=$(echo $JS | jq 'del(.optionTypeList.id)')
+
+        curl -X PUT {{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}" --data "$JS"
+  
+    when: BACKUP == 'New'
+
+  - name: Update Backup Job Targets
+    shell:
+      cmd: |
+        JSON=$(curl -X GET {{ MORPHURL }}api/jobs/{{ JOB }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}")
+        UPDATEDJSON=$(echo $JSON | jq .job.targets)
+        UPDATEDJSON=$(echo ${UPDATEDJSON::-1}, {\"refId\": $INSTANCEID}])
+        JS=$(echo $JSON | jq ".job.targets = $UPDATEDJSON")
+
+        curl -X PUT {{ MORPHURL }}api/jobs/{{ JOB }} --header 'content-type: application/json' --header "authorization: Bearer {{ MORPHTOKEN }}" --data "$JS"
