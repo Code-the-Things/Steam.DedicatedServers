@@ -31,11 +31,11 @@
 
   - name: Print OLDATA
     debug:
-      msg: '{{ OLDATA }}'
+      msg: '{{ OLDATA.json }}'
 
   - name: Update Dataset
     json_patch:
-      src: '{{ OLDATA }}'
+      src: '{{ OLDATA.json }}'
       operations:
         - op: add
           path: "/optionTypeList/initialDataset/{{ BACKUP }}"
@@ -51,7 +51,7 @@
       headers:
         Authorization: "BEARER {{ MORPHTOKEN }}"
       body:
-        '{{ oldata }}'
+        '{{ oldata.json }}'
 
 
   # - name: Update Option List Values

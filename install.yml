@@ -5,7 +5,7 @@
     become: true
     vars:
       SERVERTYPE: "{{ morpheus['instance']['layoutName'] }}"
-      BACKUP: "{{ morpheus['customOptions']['steamBackup']['value'] }}"
+      BACKUP: "{{ morpheus['customOptions']['steamBackup'] }}"
   
     tasks:
       - include_role:
