@@ -55,7 +55,7 @@
         Authorization: "BEARER {{ MORPHTOKEN }}"
       body:
         optionTypeList:
-          initialDataset: {{ JSON }}
+          initialDataset: '{{ JSON }}'
       status_code: 200
 
   - name: Delete TEMP File
@@ -100,7 +100,7 @@
         Authorization: "BEARER {{ MORPHTOKEN }}"
       body:
         job:
-          targets: {{ JSON }}
+          targets: '{{ JSON }}'
       status_code: 200
 
   - name: Delete TEMP File
