@@ -27,8 +27,6 @@
 
   - copy: content='{{ OLDATA.json.optionTypeList.initialDataset }}' dest=/json.txt
 
-  - copy: content='{{ OLDATA.json.optionTypeList.initialDataset }}' dest=/json1.txt
-
   - name: Update Dataset
     json_patch:
       src: "/json.txt"
@@ -40,8 +38,10 @@
             value: "{{ BACKUP }}"
       pretty: yes
 
-  - debug:
-      msg: "{{lookup('file', '/json.txt') | from_json }}"
+  - name: Set File to Var
+    slurp:
+      src: "/json.txt"
+    register: JSON
 
   - name: Update Option List
     uri:
@@ -52,7 +52,7 @@
         Authorization: "BEARER {{ MORPHTOKEN }}"
       body:
         optionTypeList:
-          initialDataset: "{{lookup('file', '/json.txt') | from_json }}"
+          initialDataset: "{{ JSON }}"
 
   # - name: Update Option List Values
   #   shell:
