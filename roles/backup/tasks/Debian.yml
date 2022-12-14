@@ -31,15 +31,20 @@
 
   - name: Print OLDATA
     debug:
-      msg: '{{ OLDATA.json }}'
+      msg: '{{ OLDATA.json.optionTypeList.initialDataset }}'
+
+  - name: Create JSON Var
+    shell: |
+      echo '{{ OLDATA }}' | jq .json.optionTypeList.initialDataset -r
+    register: JSON
 
   - name: Update Dataset
     json_patch:
-      src: '{{ OLDATA.json }}'
+      src: '{{ JSON }}'
       operations:
         - op: add
-          path: "/optionTypeList/initialDataset/{{ BACKUP }}"
-          value: "{{ BACKUP }}"
+          path: "/{{ BACKUP }}"
+          value: "{{ JSON }}"
       pretty: yes
       create: yes
 
@@ -50,8 +55,10 @@
       url: "{{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }}"
       headers:
         Authorization: "BEARER {{ MORPHTOKEN }}"
-      body:
-        '{{ oldata.json }}'
+      body: |
+        '"optionTypeList": {
+          "initialDataset": {{ JSON }}
+        }'
 
 
   # - name: Update Option List Values
