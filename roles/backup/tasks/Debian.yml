@@ -3,10 +3,6 @@
       BACKUP: "{{ NEWBACKUP }}"
     when: BACKUP == "New"
 
-  - name: Print BACKUP
-    debug:
-      msg: "{{ BACKUP }}"
-
   - name: Install Required Packages
     package:
       name:
@@ -32,11 +28,12 @@
   - name: Print OLDATA
     debug:
       msg: '{{ OLDATA.json.optionTypeList.initialDataset }}'
-
-  - name: Create JSON Var
-    shell: |
-      echo '{{ OLDATA }}' | jq .json.optionTypeList.initialDataset -r
     register: JSON
+
+  # - name: Create JSON Var
+  #   shell: |
+  #     echo '{{ OLDATA }}' | jq .json.optionTypeList.initialDataset -r
+  #   register: JSON
 
   - name: Update Dataset
     json_patch:
@@ -44,7 +41,7 @@
       operations:
         - op: add
           path: "/{{ BACKUP }}"
-          value: "{{ JSON }}"
+          value: "{{ BACKUP }}"
       pretty: yes
       create: yes
 
