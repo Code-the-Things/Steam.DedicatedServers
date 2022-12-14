@@ -33,6 +33,7 @@
   - name: Update Dataset
     json_patch:
       src: '{{ JSON }}'
+      dest: '/json.txt'
       operations:
         - op: add
           path: "/{{ BACKUP }}"
@@ -44,6 +45,8 @@
     debug:
       msg: '{{ JSON }}'
 
+  - debug: msg="{{lookup('file', '/json.txt') }}"
+
   - name: Update Option List
     uri:
       method: PUT
@@ -51,11 +54,9 @@
       url: "{{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }}"
       headers:
         Authorization: "BEARER {{ MORPHTOKEN }}"
-      body: |
-        '"optionTypeList": {
-          "initialDataset": {{ JSON }}
-        }'
-
+      body:
+        optionTypeList:
+          initialDataset: "{{lookup('file', '/json.txt') }}"
 
   # - name: Update Option List Values
   #   shell:
