@@ -30,11 +30,6 @@
       msg: '{{ OLDATA.json.optionTypeList.initialDataset }}'
     register: JSON
 
-  # - name: Create JSON Var
-  #   shell: |
-  #     echo '{{ OLDATA }}' | jq .json.optionTypeList.initialDataset -r
-  #   register: JSON
-
   - name: Update Dataset
     json_patch:
       src: '{{ JSON }}'
@@ -44,6 +39,10 @@
           value: "{{ BACKUP }}"
       pretty: yes
       create: yes
+
+  - name: Print JSON Var
+    debug:
+      msg: '{{ JSON }}'
 
   - name: Update Option List
     uri:
