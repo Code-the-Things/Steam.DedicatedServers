@@ -30,10 +30,11 @@
       msg: '{{ OLDATA.json.optionTypeList.initialDataset }}'
     register: JSON
 
+  - copy: content="{{ JSON }}" dest=/json.txt
+
   - name: Update Dataset
     json_patch:
-      src: '{{ JSON }}'
-      dest: '/json.txt'
+      src: '/json.txt'
       operations:
         - op: add
           path: "/{{ BACKUP }}"
@@ -41,11 +42,8 @@
       pretty: yes
       create: yes
 
-  - name: Print JSON Var
-    debug:
-      msg: '{{ JSON }}'
-
-  - debug: msg="{{lookup('file', '/json.txt') }}"
+  - debug:
+      msg: "{{lookup('file', '/json.txt') }}"
 
   - name: Update Option List
     uri:
