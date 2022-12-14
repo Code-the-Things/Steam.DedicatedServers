@@ -37,13 +37,15 @@
       src: '/json.txt'
       operations:
         - op: add
-          path: "/{{ BACKUP }}"
-          value: "{{ BACKUP }}"
+          path: "/-"
+          value: 
+            name: "{{ BACKUP }}"
+            value: "{{ BACKUP }}"
       pretty: yes
       create: yes
 
   - debug:
-      msg: "{{lookup('file', '/json.txt') }}"
+      msg: "{{lookup('file', '/json.txt') | from_json }}"
 
   - name: Update Option List
     uri:
@@ -54,7 +56,7 @@
         Authorization: "BEARER {{ MORPHTOKEN }}"
       body:
         optionTypeList:
-          initialDataset: "{{lookup('file', '/json.txt') }}"
+          initialDataset: "{{lookup('file', '/json.txt') | from_json }}"
 
   # - name: Update Option List Values
   #   shell:
