@@ -32,9 +32,11 @@
 
   - copy: content="{{ JSON }}" dest=/json.txt
 
+  - copy: content="{{ JSON }}" dest=/json1.txt
+
   - name: Update Dataset
     json_patch:
-      src: '/json.txt'
+      src: "/json.txt"
       operations:
         - op: add
           path: "/-"
@@ -42,7 +44,6 @@
             name: "{{ BACKUP }}"
             value: "{{ BACKUP }}"
       pretty: yes
-      create: yes
 
   - debug:
       msg: "{{lookup('file', '/json.txt') | from_json }}"
