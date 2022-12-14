@@ -4,3 +4,4 @@
   MORPHTOKEN: "{{ morpheus['morpheus']['apiAccessToken'] }}"
   OPTIONLIST: "{{ morpheus['customOptions']['optionList'] }}"
   JOB: "{{ morpheus['customOptions']['job'] }}"
+  INSTANCEID: "{{ morpheus['instance']['id'] }}"
