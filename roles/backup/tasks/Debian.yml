@@ -53,9 +53,8 @@
       url: "{{ MORPHURL }}api/library/option-type-lists/{{ OPTIONLIST }}"
       headers:
         Authorization: "BEARER {{ MORPHTOKEN }}"
-      body:
-        optionTypeList:
-          initialDataset: '{{ JSON }}'
+      body: >
+        {"optionTypeList": {"initialDataset": {{ JSON }}}}
       status_code: 200
 
   - name: Delete TEMP File
@@ -98,9 +97,8 @@
       url: "{{ MORPHURL }}api/jobs/{{ JOB }}"
       headers:
         Authorization: "BEARER {{ MORPHTOKEN }}"
-      body:
-        job:
-          targets: '{{ JSON }}'
+      body: >
+        {"job": {"targets": {{ JSON }}}}
       status_code: 200
 
   - name: Delete TEMP File
