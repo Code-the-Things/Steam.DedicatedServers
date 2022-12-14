@@ -39,8 +39,8 @@
       pretty: yes
 
   - name: Set File to Var
-    slurp:
-      src: "/json.txt"
+    shell:
+      cat /json.txt | jq tostring
     register: JSON
 
   - name: Update Option List
