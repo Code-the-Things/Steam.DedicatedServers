@@ -46,6 +46,11 @@
       cat /json.txt | jq tostring
     register: JSON
 
+  - name: Echo JSON
+    debug:
+      msg:
+        "{{ JSON }}"
+
   - name: Update Option List
     uri:
       method: PUT
@@ -89,6 +94,11 @@
     shell: |
       cat /json.txt | jq tostring
     register: JSON
+
+  - name: Echo JSON
+    debug:
+      msg:
+        "{{ JSON }}"
 
   - name: Update Job Inventory
     uri:
