@@ -25,14 +25,9 @@
         Authorization: "BEARER {{ MORPHTOKEN }}"
     register: OLDATA
 
-  - name: Print OLDATA
-    debug:
-      msg: '{{ OLDATA.json.optionTypeList.initialDataset }}'
-    register: JSON
+  - copy: content='{{ OLDATA.json.optionTypeList.initialDataset }}' dest=/json.txt
 
-  - copy: content="{{ JSON }}" dest=/json.txt
-
-  - copy: content="{{ JSON }}" dest=/json1.txt
+  - copy: content='{{ OLDATA.json.optionTypeList.initialDataset }}' dest=/json1.txt
 
   - name: Update Dataset
     json_patch:
