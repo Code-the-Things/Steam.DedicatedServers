@@ -90,15 +90,10 @@
             refId: "{{ INSTANCEID }}"
       pretty: yes
 
-  - name: Set File to Var
-    shell: |
-      cat /json.txt | jq tostring
+  - name: Set File as Var
+    slurp:
+      src: /json.txt
     register: JSON
-
-  - name: Echo JSON
-    debug:
-      msg:
-        "{{ JSON.stdout }}"
 
   - name: Update Job Inventory
     uri:
@@ -107,8 +102,13 @@
       url: "{{ MORPHURL }}api/jobs/{{ JOB }}"
       headers:
         Authorization: "BEARER {{ MORPHTOKEN }}"
-      body: >
-        {"job": {"targets": {{ JSON.stdout }}}}
+      body: |
+        {
+          "job": {
+            "targets":
+              {{ JSON }}
+          }
+        }
       status_code: 200
 
   - name: Delete TEMP File
