@@ -82,7 +82,7 @@
         - op: add
           path: "/-"
           value: 
-            refId: "{{ morpheus['instance']['id'] | int }}"
+            refId: "{{ INSTANCEID }}"
       pretty: yes
   
   - name: Set File to Var
