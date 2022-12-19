@@ -87,7 +87,7 @@
   
   - name: Set File to Var
     shell: |
-      cat /json.txt | jq tostring
+      cat /json.txt | jq -c
     register: JSON
   
   # - name: Set File as Var
