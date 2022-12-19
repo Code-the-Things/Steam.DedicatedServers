@@ -46,11 +46,6 @@
       cat /json.txt | jq tostring
     register: JSON
 
-  - name: Echo JSON
-    debug:
-      msg:
-        "{{ JSON.stdout }}"
-
   - name: Update Option List
     uri:
       method: PUT
@@ -89,7 +84,12 @@
           value: 
             refId: 4035
       pretty: yes
-
+  
+  - name: Set File to Var
+    shell: |
+      cat /json.txt | jq tostring
+    register: JSON
+  
   - name: Set File as Var
     slurp:
       src: /json.txt
@@ -102,13 +102,8 @@
       url: "{{ MORPHURL }}api/jobs/{{ JOB }}"
       headers:
         Authorization: "BEARER {{ MORPHTOKEN }}"
-      body: |
-        {
-          "job": {
-            "targets":
-              {{ JSON }}
-          }
-        }
+      body: >
+        {"job": {"targets": {{ JSON.stdout }}}}
       status_code: 200
 
   - name: Delete TEMP File
