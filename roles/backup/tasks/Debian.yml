@@ -3,6 +3,9 @@
       BACKUP: "{{ NEWBACKUP }}"
     when: BACKUP == "New"
 
+  - set_fact:
+      INSTANCEID: "{{ morpheus['instance']['id'] | int }}"
+
   - name: Install Required Packages
     package:
       name:
@@ -82,7 +85,7 @@
         - op: add
           path: "/-"
           value: 
-            refId: '{{ INSTANCEID }}'
+            refId: "{{ INSTANCEID }}"
       pretty: yes
   
   - name: Set File to Var
