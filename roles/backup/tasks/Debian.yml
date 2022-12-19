@@ -82,13 +82,12 @@
         - op: add
           path: "/-"
           value: 
-            refId: |
-              {{ INSTANCEID }}
+            refId: '{{ INSTANCEID }}'
       pretty: yes
   
   - name: Set File to Var
     shell: |
-      cat /json.txt | jq -c {{ TEST }}
+      cat /json.txt | jq -c
     register: JSON
   
   # - name: Set File as Var
