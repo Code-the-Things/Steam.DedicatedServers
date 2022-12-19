@@ -81,7 +81,7 @@
       operations:
         - op: add
           path: "/-"
-          force_integer: true
+          # force_integer: true
           value: 
             refId: '{{ INSTANCEID }}'
       pretty: yes
