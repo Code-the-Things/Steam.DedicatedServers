@@ -370,10 +370,14 @@ class JSONPatcher(object):
         return next_obj
 
     # https://tools.ietf.org/html/rfc6902#section-4.1
-    def add(self, path, value, obj, **discard):
+    def add(self, path, value, obj, force_integer=False, **discard):
         """Perform an 'add' operation."""
         chg = False
         path = path.lstrip('/')
+        if force_integer is True and type(value) is dict:
+            for k, v in value.items():
+                if v.isdigit():
+                    value[k] = int(v)
         if "/" not in path:  # recursion termination
             if isinstance(obj, dict):
                 old_value = obj.get(path)
