@@ -85,7 +85,7 @@
         - op: add
           path: "/-"
           value: 
-            refId: "{{ INSTANCEID }}"
+            refId: '{{ INSTANCEID }}'
       pretty: yes
   
   - name: Set File to Var
