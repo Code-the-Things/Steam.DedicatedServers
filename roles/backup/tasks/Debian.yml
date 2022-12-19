@@ -90,10 +90,10 @@
       cat /json.txt | jq tostring
     register: JSON
   
-  - name: Set File as Var
-    slurp:
-      src: /json.txt
-    register: JSON
+  # - name: Set File as Var
+  #   slurp:
+  #     src: /json.txt
+  #   register: JSON
 
   - name: Update Job Inventory
     uri:
