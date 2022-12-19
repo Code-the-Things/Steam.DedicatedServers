@@ -81,6 +81,7 @@
       operations:
         - op: add
           path: "/-"
+          force_integer: true
           value: 
             refId: '{{ INSTANCEID }}'
       pretty: yes
@@ -89,11 +90,6 @@
     shell: |
       cat /json.txt | jq -c
     register: JSON
-  
-  # - name: Set File as Var
-  #   slurp:
-  #     src: /json.txt
-  #   register: JSON
 
   - name: Update Job Inventory
     uri:
