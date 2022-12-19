@@ -3,9 +3,6 @@
       BACKUP: "{{ NEWBACKUP }}"
     when: BACKUP == "New"
 
-  - set_fact:
-      INSTANCEID: "{{ morpheus['instance']['id'] | int }}"
-
   - name: Install Required Packages
     package:
       name:
