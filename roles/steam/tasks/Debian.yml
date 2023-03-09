@@ -53,8 +53,8 @@
     loop:
       - /steam/morpheus
       - /steam/server
-      - /home/steam/.steam/sdk64
-      - /home/steam/.steam/sdk32
+      - /root/.steam/sdk64
+      - /root/.steam/sdk32
 
   - name: Link steamcmd executable
     file:
@@ -68,8 +68,8 @@
 
   - name: Symlink Server Config
     file:
-      src: /steam/server/bin/steamclient.so
-      dest: /home/steam/.steam/sdk32/steamclient.so
+      src: /steam/server/steamclient.so
+      dest: /root/.steam/sdk32/steamclient.so
       state: link
       owner: steam
       group: steam
@@ -78,8 +78,8 @@
 
   - name: Symlink Server Config
     file:
-      src: /steam/server/bin/steamclient.so
-      dest: /home/steam/.steam/sdk64/steamclient.so
+      src: /steam/server/linux64/steamclient.so
+      dest: /root/.steam/sdk64/steamclient.so
       state: link
       owner: steam
       group: steam
