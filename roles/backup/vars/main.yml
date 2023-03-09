@@ -5,3 +5,4 @@
   OPTIONLIST: "{{ morpheus['customOptions']['optionList'] }}"
   JOB: "{{ morpheus['customOptions']['job'] }}"
   INSTANCEID: "{{ morpheus['instance']['id'] | int }}"
+  NFS: "{{ morpheus['customOptions']['nfs'] }}"

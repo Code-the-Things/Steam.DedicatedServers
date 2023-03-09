@@ -17,6 +17,22 @@
       group: steam
       mode: 0644
 
+  - name: Mount NFS Share
+    ansible.posix.mount:
+      path: /backups
+      src: "{{ NFS }}"
+      fstype: nfs
+      state: mounted
+      opts: "nfsvers=4.1"
+
+  - name: Create Backup Sub-Directory
+    file:
+      path: '/backups/{{ BACKUP }}'
+      state: directory
+      owner: steam
+      group: steam
+      mode: 0644
+
   - name: Get Option List
     uri:
       method: GET
@@ -29,6 +45,7 @@
     copy: 
       content: '{{ OLDATA.json.optionTypeList.initialDataset }}'
       dest: /json.txt
+    when: BACKUP != "New"
 
   - name: Update Dataset
     json_patch:
@@ -40,11 +57,13 @@
             name: "{{ BACKUP }}"
             value: "{{ BACKUP }}"
       pretty: yes
+    when: BACKUP != "New"
 
   - name: Set File to Var
     shell: |
       cat /json.txt | jq tostring
     register: JSON
+    when: BACKUP != "New"
 
   - name: Update Option List
     uri:
@@ -56,11 +75,13 @@
       body: >
         {"optionTypeList": {"initialDataset": {{ JSON.stdout }}}}
       status_code: 200
+    when: BACKUP != "New"
 
   - name: Delete TEMP File
     file:
       path: /json.txt
       state: absent
+    when: BACKUP != "New"
 
   - name: Get Job Inventory
     uri:
