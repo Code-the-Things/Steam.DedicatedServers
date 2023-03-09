@@ -16,6 +16,6 @@
 
       - name: Backup Valheim Files
         community.general.archive:
-          path: /home/steam/.config/unity3d/IronGate/Valheim/worlds/
+          path: /root/.config/unity3d/IronGate/Valheim/worlds/
           dest: /backups/{{ BACKUP }}/dedicated.tgz
         when: SERVERTYPE == "Valheim"
