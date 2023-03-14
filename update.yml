@@ -1,0 +1,14 @@
+---
+  - name: Start Steam Server
+    hosts: all
+    gather_facts: true
+    become: true
+    become_user: steam
+
+    tasks:
+      - name: Update Steam Dedicated Server
+        shell:
+          cmd: |
+            /usr/games/steamcmd +login anonymous +force_install_dir '/steam/server' +app_update {{ SERVERID }} -validate +quit
+        become: true
+        become_user: steam
