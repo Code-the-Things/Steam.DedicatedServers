@@ -6,7 +6,10 @@
     become_user: steam
 
     tasks:
+      - name: Start Screen Session
+        command: |
+          screen -dmS steam
+
       - name: Start Steam Server
-        shell:
-          cmd: |
-            screen -dmS steam /steam/start.sh
+        command: |
+          sh -c "screen -S steam -X '/steam/start.sh\n'"
