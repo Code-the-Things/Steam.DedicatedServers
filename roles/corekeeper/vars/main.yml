@@ -4,6 +4,7 @@
   SOURCEMODSOURCE: 'sourcemod-1.11.0-git6923-linux.tar.gz'
   SOURCEMODVER: '1.11'
 
-  SERVERID: '1963720'
+  #SERVERID: '1963720'
+  SERVERID: "{{ morpheus['customOptions']['steamAppId'] }}"
 
   INSTANCEID: "{{ morpheus['instance']['id'] }}"
