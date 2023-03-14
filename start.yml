@@ -8,4 +8,6 @@
     tasks:
       - name: Start Steam Server
         shell:
-          screen -S steamserver bash -c "bash /steam/start.sh"
+          cmd: |
+            script /dev/null
+            screen -S steamserver bash -c "bash /steam/start.sh"
