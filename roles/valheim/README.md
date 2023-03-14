@@ -10,5 +10,5 @@ Valheim is a game about exploring a huge fantasy world inspired by Norse mytholo
 |`METASOURCE`||MetaMod Installer Package.| `mmsource-1.11.0-git1148-linux.tar.gz` |
 |`SOURCEMODVER`||SourceMod Version to Install.| `1.11`|
 |`SOURCEMODSOURCE`||SourceMod Installer Package.|`sourcemod-1.11.0-git6923-linux.tar.gz`|
-|`SERVERID`||Steam Dedicated Server ID.|`222860`|
+|`SERVERID`||Steam Dedicated Server ID.|`896660`|
 |`INSTANCEID`|instance.id|Instance ID from the provisioning Server. Used for server naming.||

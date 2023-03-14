@@ -9,4 +9,4 @@
       - name: Start Steam Server
         shell:
           cmd: |
-            screen -S steamserver -dm "/steam/start.sh"
+            screen -dmS steam /steam/start.sh
