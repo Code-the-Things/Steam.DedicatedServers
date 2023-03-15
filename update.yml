@@ -1,5 +1,5 @@
 ---
-  - name: Start Steam Server
+  - name: Update Steam Server
     hosts: all
     gather_facts: true
     become: true

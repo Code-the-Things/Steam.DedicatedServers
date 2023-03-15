@@ -8,8 +8,4 @@
     tasks:
       - name: Start Screen Session
         command: |
-          screen -dmS steam
-
-      - name: Start Steam Server
-        command: |
-          screen -S steam -X stuff '/steam/start.sh\n'
+          screen -dmS steam /steam/start.sh
