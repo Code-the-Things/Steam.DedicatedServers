@@ -10,5 +10,3 @@
         shell:
           cmd: |
             /usr/games/steamcmd +login anonymous +force_install_dir '/steam/server' +app_update {{ SERVERID }} -validate +quit
-        become: true
-        become_user: steam
