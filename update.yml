@@ -4,6 +4,8 @@
     gather_facts: true
     become: true
     become_user: steam
+    vars:
+      SERVERID: "{{ morpheus['customOptions']['steamAppId'] }}"
 
     tasks:
       - name: Update Steam Dedicated Server
