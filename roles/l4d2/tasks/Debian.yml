@@ -95,3 +95,7 @@
     owner: steam
     group: steam
     recurse: true
+
+- name: Start Screen Session
+  shell: |
+    screen -dmS steam /steam/start.sh

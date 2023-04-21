@@ -3,12 +3,20 @@
     hosts: all
     gather_facts: true
     become: true
-    become_user: steam
     vars:
       SERVERID: "{{ morpheus['customOptions']['steamAppId'] }}"
 
     tasks:
+      - name: Stop Screen Session
+        shell: |
+          screen -S steam -X stuff "^C"
+          sleep 30
+
       - name: Update Steam Dedicated Server
         shell:
           cmd: |
             /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+
+      - name: Start Screen Session
+        shell: |
+          screen -dmS steam /steam/start.sh

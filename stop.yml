@@ -1,0 +1,10 @@
+---
+  - name: Stop Steam Server
+    hosts: all
+    gather_facts: true
+    become: true
+
+    tasks:
+      - name: Stop Screen Session
+        shell: |
+          screen -S steam -X stuff "^C"

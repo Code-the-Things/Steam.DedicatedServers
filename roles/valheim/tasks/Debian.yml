@@ -1,81 +1,85 @@
 ---
-  - name: Install Valheim
-    shell:
-      cmd: |
-        /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
-    become: true
-    become_user: steam
-  
-  - name: Install Metamod
-    ansible.builtin.unarchive:
-      src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
-      dest: /steam/server
-      remote_src: yes
-    become: true
-    become_user: steam
-  
-  - name: Install Sourcemod
-    ansible.builtin.unarchive:
-      src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
-      dest: /steam/server
-      remote_src: yes
-    become: true
-    become_user: steam
-  
-  - name: Symlink Banned User Config
-    file:
-      src: /steam/morpheus/banned_user.cfg
-      dest: /steam/server/cfg/banned_user.cfg
-      state: link
-      owner: steam
-      group: steam
-      mode: 0644
-      force: true
-  
-  - name: Symlink Banned IP Config
-    file:
-      src: /steam/morpheus/banned_ip.cfg
-      dest: /steam/server/cfg/banned_ip.cfg
-      state: link
-      owner: steam
-      group: steam
-      mode: 0644
-      force: true
-  
-  - name: Symlink Admin Config
-    file:
-      src: /steam/morpheus/admins_simple.ini
-      dest: /steam/server/addons/sourcemod/configs/admins_simple.ini
-      state: link
-      owner: steam
-      group: steam
-      mode: 0644
-      force: true
-  
-  - name: Creating Start Script
-    copy:
-      dest: /steam/start.sh
-      content: |
-        cd "$(dirname "$0")"
+- name: Install Valheim
+  shell:
+    cmd: |
+      /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+  become: true
+  become_user: steam
 
-        export templdpath=$LD_LIBRARY_PATH
-        export LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH
-        export SteamAppId=892970
-        
-        echo "Starting server PRESS CTRL-C to exit"
-        
-        # Tip: Make a local copy of this script to avoid it being overwritten by steam.
-        # NOTE: Minimum password length is 5 characters & Password cant be in the server name.
-        # NOTE: You need to make sure the ports 2456-2458 is being forwarded to your server through your local router & firewall.
-        
-        ./server/valheim_server.x86_64 -name 'Code the Things - {{ INSTANCEID }}' -port {{ STEAMPORT }} -world '{{ WORLD }}' -password '{{ PASSWORD }}'
-        
-        export LD_LIBRARY_PATH=$templdpath
-      mode: a+x
-  
-  - name: Fix File Permissions
-    file:
-      path: /steam/
-      owner: steam
-      group: steam
-      recurse: true
+- name: Install Metamod
+  ansible.builtin.unarchive:
+    src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
+    dest: /steam/server
+    remote_src: yes
+  become: true
+  become_user: steam
+
+- name: Install Sourcemod
+  ansible.builtin.unarchive:
+    src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
+    dest: /steam/server
+    remote_src: yes
+  become: true
+  become_user: steam
+
+- name: Symlink Banned User Config
+  file:
+    src: /steam/morpheus/banned_user.cfg
+    dest: /steam/server/cfg/banned_user.cfg
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Symlink Banned IP Config
+  file:
+    src: /steam/morpheus/banned_ip.cfg
+    dest: /steam/server/cfg/banned_ip.cfg
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Symlink Admin Config
+  file:
+    src: /steam/morpheus/admins_simple.ini
+    dest: /steam/server/addons/sourcemod/configs/admins_simple.ini
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Creating Start Script
+  copy:
+    dest: /steam/start.sh
+    content: |
+      cd "$(dirname "$0")"
+
+      export templdpath=$LD_LIBRARY_PATH
+      export LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH
+      export SteamAppId=892970
+      
+      echo "Starting server PRESS CTRL-C to exit"
+      
+      # Tip: Make a local copy of this script to avoid it being overwritten by steam.
+      # NOTE: Minimum password length is 5 characters & Password cant be in the server name.
+      # NOTE: You need to make sure the ports 2456-2458 is being forwarded to your server through your local router & firewall.
+      
+      ./server/valheim_server.x86_64 -name 'Code the Things - {{ INSTANCEID }}' -port {{ STEAMPORT }} -world '{{ WORLD }}' -password '{{ PASSWORD }}'
+      
+      export LD_LIBRARY_PATH=$templdpath
+    mode: a+x
+
+- name: Fix File Permissions
+  file:
+    path: /steam/
+    owner: steam
+    group: steam
+    recurse: true
+
+- name: Start Screen Session
+  shell: |
+    screen -dmS steam /steam/start.sh

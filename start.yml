@@ -3,7 +3,6 @@
     hosts: all
     gather_facts: true
     become: true
-    #become_user: steam
 
     tasks:
       - name: Start Screen Session

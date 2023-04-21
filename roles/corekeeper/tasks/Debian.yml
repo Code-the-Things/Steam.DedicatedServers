@@ -1,67 +1,71 @@
 ---
-  - name: Install Core Keeper
-    shell:
-      cmd: |
-        /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
-    become: true
-    become_user: steam
-  
-  - name: Install Metamod
-    ansible.builtin.unarchive:
-      src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
-      dest: /steam/server
-      remote_src: yes
-    become: true
-    become_user: steam
-  
-  - name: Install Sourcemod
-    ansible.builtin.unarchive:
-      src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
-      dest: /steam/server
-      remote_src: yes
-    become: true
-    become_user: steam
-  
-  - name: Symlink Banned User Config
-    file:
-      src: /steam/morpheus/banned_user.cfg
-      dest: /steam/server/cfg/banned_user.cfg
-      state: link
-      owner: steam
-      group: steam
-      mode: 0644
-      force: true
-  
-  - name: Symlink Banned IP Config
-    file:
-      src: /steam/morpheus/banned_ip.cfg
-      dest: /steam/server/cfg/banned_ip.cfg
-      state: link
-      owner: steam
-      group: steam
-      mode: 0644
-      force: true
-  
-  - name: Symlink Admin Config
-    file:
-      src: /steam/morpheus/admins_simple.ini
-      dest: /steam/server/addons/sourcemod/configs/admins_simple.ini
-      state: link
-      owner: steam
-      group: steam
-      mode: 0644
-      force: true
-  
-  - name: Creating Start Script
-    copy:
-      dest: /steam/start.sh
-      content: |
-        /steam/server/_launch.sh
-      mode: a+x
-  
-  - name: Fix File Permissions
-    file:
-      path: /steam/
-      owner: steam
-      group: steam
-      recurse: true
+- name: Install Core Keeper
+  shell:
+    cmd: |
+      /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+  become: true
+  become_user: steam
+
+- name: Install Metamod
+  ansible.builtin.unarchive:
+    src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
+    dest: /steam/server
+    remote_src: yes
+  become: true
+  become_user: steam
+
+- name: Install Sourcemod
+  ansible.builtin.unarchive:
+    src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
+    dest: /steam/server
+    remote_src: yes
+  become: true
+  become_user: steam
+
+- name: Symlink Banned User Config
+  file:
+    src: /steam/morpheus/banned_user.cfg
+    dest: /steam/server/cfg/banned_user.cfg
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Symlink Banned IP Config
+  file:
+    src: /steam/morpheus/banned_ip.cfg
+    dest: /steam/server/cfg/banned_ip.cfg
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Symlink Admin Config
+  file:
+    src: /steam/morpheus/admins_simple.ini
+    dest: /steam/server/addons/sourcemod/configs/admins_simple.ini
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Creating Start Script
+  copy:
+    dest: /steam/start.sh
+    content: |
+      /steam/server/_launch.sh
+    mode: a+x
+
+- name: Fix File Permissions
+  file:
+    path: /steam/
+    owner: steam
+    group: steam
+    recurse: true
+
+- name: Start Screen Session
+  shell: |
+    screen -dmS steam /steam/start.sh
