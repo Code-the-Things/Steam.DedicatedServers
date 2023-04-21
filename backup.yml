@@ -18,12 +18,12 @@
         - name: Backup Core Keeper Files
           community.general.archive:
             path: /.config/unity3d/Pugstorm/Core\ Keeper/DedicatedServer/
-            dest: /backups/{{ BACKUP }}/dedicated.tgz
+            dest: /backups/{{ BACKUP }}/dedicated.tar.gz
           when: SERVERTYPE == "Core Keeper"
 
         - name: Backup Valheim Files
           community.general.archive:
-            path: /root/.config/unity3d/IronGate/Valheim/worlds/
-            dest: /backups/{{ BACKUP }}/dedicated.tgz
+            path: /root/.config/unity3d/IronGate/Valheim/worlds_local/
+            dest: /backups/{{ BACKUP }}/dedicated.tar.gz
           when: SERVERTYPE == "Valheim"
         when: BACKUP != "None"
