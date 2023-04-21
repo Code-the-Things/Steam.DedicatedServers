@@ -7,7 +7,5 @@
 
     tasks:
       - name: Start Screen Session
-        shell:
-          cmd: |
-            screen -dmS steam /steam/start.sh
-            sleep 2
+        shell: |
+          screen -dmS steam /steam/start.sh
