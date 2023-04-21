@@ -83,47 +83,47 @@
       state: absent
     when: BACKUP != "New"
 
-  - name: Get Job Inventory
-    uri:
-      method: GET
-      url: "{{ MORPHURL }}api/jobs/{{ JOB }}"
-      headers:
-        Authorization: "BEARER {{ MORPHTOKEN }}"
-    register: JOBDATA
+  # - name: Get Job Inventory
+  #   uri:
+  #     method: GET
+  #     url: "{{ MORPHURL }}api/jobs/{{ JOB }}"
+  #     headers:
+  #       Authorization: "BEARER {{ MORPHTOKEN }}"
+  #   register: JOBDATA
 
-  - name: Create TEMP File
-    copy: 
-      content: '{{ JOBDATA.json.job.targets }}'
-      dest: /json.txt
+  # - name: Create TEMP File
+  #   copy: 
+  #     content: '{{ JOBDATA.json.job.targets }}'
+  #     dest: /json.txt
 
-  - name: Update Dataset
-    json_patch:
-      src: "/json.txt"
-      operations:
-        - op: add
-          path: "/-"
-          force_integer: true
-          value: 
-            refId: '{{ INSTANCEID }}'
-      pretty: yes
+  # - name: Update Dataset
+  #   json_patch:
+  #     src: "/json.txt"
+  #     operations:
+  #       - op: add
+  #         path: "/-"
+  #         force_integer: true
+  #         value: 
+  #           refId: '{{ INSTANCEID }}'
+  #     pretty: yes
   
-  - name: Set File to Var
-    shell: |
-      cat /json.txt | jq -c
-    register: JSON
+  # - name: Set File to Var
+  #   shell: |
+  #     cat /json.txt | jq -c
+  #   register: JSON
 
-  - name: Update Job Inventory
-    uri:
-      method: PUT
-      body_format: json
-      url: "{{ MORPHURL }}api/jobs/{{ JOB }}"
-      headers:
-        Authorization: "BEARER {{ MORPHTOKEN }}"
-      body: >
-        {"job": {"targets": {{ JSON.stdout }}}}
-      status_code: 200
+  # - name: Update Job Inventory
+  #   uri:
+  #     method: PUT
+  #     body_format: json
+  #     url: "{{ MORPHURL }}api/jobs/{{ JOB }}"
+  #     headers:
+  #       Authorization: "BEARER {{ MORPHTOKEN }}"
+  #     body: >
+  #       {"job": {"targets": {{ JSON.stdout }}}}
+  #     status_code: 200
 
-  - name: Delete TEMP File
-    file:
-      path: /json.txt
-      state: absent
+  # - name: Delete TEMP File
+  #   file:
+  #     path: /json.txt
+  #     state: absent
