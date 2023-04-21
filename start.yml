@@ -9,3 +9,4 @@
       - name: Start Screen Session
         command: |
           screen -dmS steam /steam/start.sh
+          sleep 2
