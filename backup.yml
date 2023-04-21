@@ -9,19 +9,21 @@
       NEWBACKUP: "{{ morpheus['customOptions']['newSteamBackup'] }}"
 
     tasks:
-      - name: Set Backup Fact
-        set_fact:
+      - set_fact:
           BACKUP: "{{ NEWBACKUP }}"
         when: BACKUP == "New"
 
-      - name: Backup Core Keeper Files
-        community.general.archive:
-          path: /.config/unity3d/Pugstorm/Core\ Keeper/DedicatedServer/
-          dest: /backups/{{ BACKUP }}/dedicated.tgz
-        when: SERVERTYPE == "Core Keeper"
+      - name: Backup
+        block:
+        - name: Backup Core Keeper Files
+          community.general.archive:
+            path: /.config/unity3d/Pugstorm/Core\ Keeper/DedicatedServer/
+            dest: /backups/{{ BACKUP }}/dedicated.tgz
+          when: SERVERTYPE == "Core Keeper"
 
-      - name: Backup Valheim Files
-        community.general.archive:
-          path: /root/.config/unity3d/IronGate/Valheim/worlds/
-          dest: /backups/{{ BACKUP }}/dedicated.tgz
-        when: SERVERTYPE == "Valheim"
+        - name: Backup Valheim Files
+          community.general.archive:
+            path: /root/.config/unity3d/IronGate/Valheim/worlds/
+            dest: /backups/{{ BACKUP }}/dedicated.tgz
+          when: SERVERTYPE == "Valheim"
+        when: BACKUP != "None"
