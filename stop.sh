@@ -1,0 +1,1 @@
+screen -S steam -X stuff "^C"
