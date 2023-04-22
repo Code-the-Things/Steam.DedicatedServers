@@ -1,4 +1,12 @@
 ---
+- name: Install Required Packages
+  package:
+    name:
+      - libpulse-dev
+      - libatomic1
+      - libc6
+    state: present
+
 - name: Install Valheim
   shell:
     cmd: |
