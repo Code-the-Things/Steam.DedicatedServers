@@ -55,6 +55,8 @@
       - /steam/server
       - /root/.steam/sdk64
       - /root/.steam/sdk32
+      - /home/steam/.steam/sdk64
+      - /home/steam/.steam/sdk32
 
   - name: Symlink steamcmd Executable
     file:
