@@ -55,7 +55,17 @@
 - name: Symlink Start Script
   file:
     src: /steam/server/PalServer.sh
-    dest: /steam/start.sh mode=a+x
+    dest: /steam/start.sh
+    state: link
+    owner: steam
+    group: steam
+    mode: a+x
+    force: true
+
+- name: Symlink Server Config
+  file:
+    src: /steam/morpheus/PalWorldSettings.ini
+    dest: /steam/server/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
     state: link
     owner: steam
     group: steam
