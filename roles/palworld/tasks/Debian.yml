@@ -62,6 +62,16 @@
     mode: a+x
     force: true
 
+- name: Create Required Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: steam
+    group: steam
+    mode: 0777
+  loop:
+    - /steam/server/Pal/Saved/Config/LinuxServer
+
 - name: Symlink Server Config
   file:
     src: /steam/morpheus/PalWorldSettings.ini
