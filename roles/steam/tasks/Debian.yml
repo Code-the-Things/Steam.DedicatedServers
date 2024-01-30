@@ -56,7 +56,7 @@
       - /root/.steam/sdk64
       - /root/.steam/sdk32
 
-  - name: Link steamcmd executable
+  - name: Symlink steamcmd Executable
     file:
       src: /usr/games/steamcmd
       dest: /home/steam/steamcmd
@@ -66,22 +66,28 @@
       mode: 0774
       force: true
 
-  - name: Symlink Server Config
+  - name: Symlink Steam Client 32-bit
     file:
       src: /steam/server/steamclient.so
-      dest: /root/.steam/sdk32/steamclient.so
+      dest: "{{ item }}"
       state: link
       owner: steam
       group: steam
       mode: 0777
       force: true
+    loop:
+      - /root/.steam/sdk32/steamclient.so
+      - /home/steam/.steam/sdk32/steamclient.so
 
-  - name: Symlink Server Config
+  - name: Symlink Steam Client 64-bit
     file:
       src: /steam/server/linux64/steamclient.so
-      dest: /root/.steam/sdk64/steamclient.so
+      dest: "{{ item }}"
       state: link
       owner: steam
       group: steam
       mode: 0777
       force: true
+    loop:
+      - /root/.steam/sdk64/steamclient.so
+      - /home/steam/.steam/sdk64/steamclient.so
