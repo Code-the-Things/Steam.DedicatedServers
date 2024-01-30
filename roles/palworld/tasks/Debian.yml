@@ -55,7 +55,7 @@
 - name: Symlink Start Script
   file:
     src: /steam/server/PalServer.sh
-    dest: /steam/start.sh
+    dest: /steam/start.sh mode=a+x
     state: link
     owner: steam
     group: steam
