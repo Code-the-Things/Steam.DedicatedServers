@@ -16,7 +16,11 @@
         shell:
           cmd: |
             /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+        become: true
+        become_user: steam
 
       - name: Start Screen Session
         shell: |
           screen -dmS steam /steam/start.sh
+        become: true
+        become_user: steam
