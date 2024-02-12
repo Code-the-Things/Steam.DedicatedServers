@@ -1,0 +1,102 @@
+{
+    "hostName": "${type}-${sequence+1000}",
+    "metadata": [
+      {
+        "name": "Application",
+        "value": "<%= (customOptions.layout == 5122) ? 'Valheim' : (customOptions.layout == 7092) ? 'Core Keeper' : (customOptions.layout == 8214) ? 'Palworld' : (customOptions.layout == 8223) ? 'Enshrouded' : 'L4D2' %>"
+      }
+    ],
+    "backup": {
+      "createBackup": false,
+      "jobAction": "new",
+      "jobRetentionCount": "7",
+      "providerBackupType": -1
+    },
+    "instance": {
+      "userGroup": {
+        "id": ""
+      },
+      "tags": "<%= (customOptions.layout == 5122) ? 'Steam,Valheim' : (customOptions.layout == 7092) ? 'Steam,Core Keeper' : (customOptions.layout == 8214) ? 'Steam,Palworld' : (customOptions.layout == 8223) ? 'Steam,Enshrouded' : 'Steam,L4D2' %>",
+      "networkDomain": {
+        "id": 7
+      }
+    },
+    "defaultExpandAdvanced": false,
+    "volumes": [
+      {
+        "vId": 15713,
+        "controllerMountPoint": "22405:0:10:0",
+        "volumeCustomizable": true,
+        "readonlyName": false,
+        "size": 100,
+        "maxIOPS": null,
+        "name": "root",
+        "rootVolume": true,
+        "minStorage": 5368709120,
+        "storageType": 1,
+        "datastoreId": "auto",
+        "maxStorage": 107374182400
+      }
+    ],
+    "type": "steam",
+    "version": "Dedicated",
+    "hideLock": true,
+    "cloud": {
+      "name": "vCenter",
+      "id": 1
+    },
+    "layout": {
+      "code": "f8e6f26a-8839-4c0a-82d6-0c79b9c83a9c",
+      "id": 5122
+    },
+    "showScale": false,
+    "environment": "10",
+    "networkInterfaces": [
+      {
+        "primaryInterface": true,
+        "showNetworkPoolLabel": true,
+        "showNetworkDhcpLabel": false,
+        "network": {
+          "idName": "Servers",
+          "pool": {
+            "name": "192.168.10.0/24",
+            "id": 30
+          },
+          "id": "network-29057"
+        }
+      }
+    ],
+    "copies": 1,
+    "templateParameter": null,
+    "loadBalancer": [],
+    "name": "${type}-${sequence+1000}",
+    "config": {
+      "poolProviderType": null,
+      "isVpcSelectable": true,
+      "smbiosAssetTag": null,
+      "isEC2": false,
+      "customOptions": {
+        "steamAppId": "<%= (customOptions.layout == 5122) ? '896660' : (customOptions.layout == 7092) ? '1963720' : (customOptions.layout == 8214) ? '2394010' : (customOptions.layout == 8223) ? '2278520' : '222860' %>",
+        "password": "<%=customOptions.password%>",
+        "steamBackup": "<%=customOptions.steamBackup%>",
+        "world": "<%=customOptions.world%>",
+        "steamPort": "<%=customOptions.steamPort%>",
+        "optionList": "<%=customOptions.optionList%>",
+        "nfs": "<%=customOptions.nfs%>",
+        "newSteamBackup": "<%=customOptions.newSteamBackup%>"
+      },
+      "resourcePoolId": "pool-2724",
+      "createUser": false,
+      "nestedVirtualization": null,
+      "vmwareFolderId": "group-v136",
+      "noAgent": false
+    },
+    "plan": {
+      "code": "vm-4by8",
+      "id": 9445
+    },
+    "group": {
+      "name": "Steam Team",
+      "id": "213"
+    }
+  }

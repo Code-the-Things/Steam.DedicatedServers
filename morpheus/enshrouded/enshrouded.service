@@ -1,0 +1,14 @@
+[Unit]
+Description=Enshrouded Dedicated Server
+After=network.target
+
+[Service]
+Type=simple
+User=[your username]
+WorkingDirectory=[path to your server folder]
+ExecStart=/usr/bin/wine enshrouded_server.exe
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

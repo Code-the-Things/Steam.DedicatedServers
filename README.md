@@ -6,13 +6,14 @@ The playbooks are written to consume [Morpheus](https://morpheusdata.com) CMP fo
 The following Steam Dedicated Servers are supported:
 
 * Core Keeper
+* Enshrouded
 * Left 4 Dead 2 (L4D2)
 * Palworld
 * Valheim
 
 Additional Steam Dedicated Servers can easily be added with minor variable changes.
 
-A common `start.yml` file is included to launch each server instance via automation.
+A common `start.yml`,`stop.yml`, and `update.yml` file is included to launch each server instance via automation.
 
 # Variables
 | Ansible Variable | Morpheus Variable | Description | Default |
