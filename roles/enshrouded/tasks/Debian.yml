@@ -1,0 +1,101 @@
+---
+- name: Create directory for keyrings
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download WineHQ key
+  shell: "wget -O- -q https://dl.winehq.org/wine-builds/winehq.key"
+  register: wine_key
+
+- name: Add WineHQ key to keyring
+  copy:
+    content: "{{ wine_key.stdout }}"
+    dest: /etc/apt/keyrings/winehq.key
+    mode: '0644'
+
+- name: Add WineHQ repository
+  apt_repository:
+    repo: "deb https://dl.winehq.org/wine-builds/ubuntu/ {{ ansible_lsb.codename }} main"
+
+- name: Install WineHQ stable
+  apt:
+    name: winehq-stable
+    state: present
+    install_recommends: yes
+    update_cache: yes
+
+- name: Install Enshrouded
+  shell:
+    cmd: |
+      /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+  become: true
+  become_user: steam
+
+- name: Install Metamod
+  ansible.builtin.unarchive:
+    src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
+    dest: /steam/server
+    remote_src: yes
+  become: true
+  become_user: steam
+
+- name: Install Sourcemod
+  ansible.builtin.unarchive:
+    src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
+    dest: /steam/server
+    remote_src: yes
+  become: true
+  become_user: steam
+
+- name: Symlink Banned User Config
+  file:
+    src: /steam/morpheus/banned_user.cfg
+    dest: /steam/server/cfg/banned_user.cfg
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Symlink Banned IP Config
+  file:
+    src: /steam/morpheus/banned_ip.cfg
+    dest: /steam/server/cfg/banned_ip.cfg
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Symlink Admin Config
+  file:
+    src: /steam/morpheus/admins_simple.ini
+    dest: /steam/server/addons/sourcemod/configs/admins_simple.ini
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Create start.sh file
+  copy:
+    content: |
+      #!/bin/bash
+      wine /steam/server/enshrouded_server.exe
+    dest: /steam/start.sh
+    mode: '0755'
+
+- name: Fix File Permissions
+  file:
+    path: /steam/
+    owner: steam
+    group: steam
+    recurse: true
+
+- name: Start Screen Session
+  shell: |
+    screen -dmS steam /steam/start.sh
+  become: true
+  become_user: steam

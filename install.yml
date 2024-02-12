@@ -11,17 +11,20 @@
       - include_role:
           name: steam
       - include_role:
-          name: l4d2
-        when: SERVERTYPE == "L4D2"
-      - include_role:
           name: corekeeper
         when: SERVERTYPE == "Core Keeper"
       - include_role:
-          name: valheim
-        when: SERVERTYPE == "Valheim" 
+          name: enshrouded
+        when: SERVERTYPE == "Enshrouded"
+      - include_role:
+          name: l4d2
+        when: SERVERTYPE == "L4D2" 
       - include_role:
           name: palworld
-        when: SERVERTYPE == "Palworld" 
+        when: SERVERTYPE == "Palworld"
+      - include_role:
+          name: valheim
+        when: SERVERTYPE == "Valheim"
       - include_role:
           name: backup
         when: (BACKUP != "None") and (BACKUP|length > 0)
