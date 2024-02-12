@@ -5,15 +5,10 @@
     state: directory
     mode: '0755'
 
-- name: Download WineHQ key
-  shell: "wget -O- -q https://dl.winehq.org/wine-builds/winehq.key"
-  register: wine_key
-
-- name: Add WineHQ key to keyring
-  copy:
-    content: "{{ wine_key.stdout }}"
-    dest: /etc/apt/keyrings/winehq.key
-    mode: '0644'
+- name: Import WineHQ GPG key
+  apt_key:
+    url: https://dl.winehq.org/wine-builds/winehq.key
+    state: present
 
 - name: Add WineHQ repository
   apt_repository:
