@@ -1,0 +1,10 @@
+{
+    "name": "<%=customOptions.serverName%>",
+    "password": "<%=customOptions.password%>",
+    "saveDirectory": "./savegame",
+    "logDirectory": "./logs",
+    "ip": "",
+    "gamePort": "15636",
+    "queryPort": "15637",
+    "slotCount": 16
+}

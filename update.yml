@@ -11,6 +11,8 @@
         shell: |
           screen -S steam -X stuff "^C"
           sleep 30
+        become: true
+        become_user: steam
 
       - name: Update Steam Dedicated Server
         shell:

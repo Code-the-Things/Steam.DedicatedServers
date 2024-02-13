@@ -8,3 +8,5 @@
       - name: Stop Screen Session
         shell: |
           screen -S steam -X stuff "^C"
+        become: true
+        become_user: steam

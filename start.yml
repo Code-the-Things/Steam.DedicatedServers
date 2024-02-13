@@ -8,3 +8,5 @@
       - name: Start Screen Session
         shell: |
           screen -dmS steam /steam/start.sh
+        become: true
+        become_user: steam

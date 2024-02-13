@@ -24,7 +24,7 @@
 - name: Install Enshrouded
   shell:
     cmd: |
-      /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +@sSteamCmdForcePlatformType windows +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 
@@ -78,7 +78,7 @@
   copy:
     content: |
       #!/bin/bash
-      wine /steam/server/enshrouded_server.exe
+      wine64 /steam/server/enshrouded_server.exe
     dest: /steam/start.sh
     mode: '0755'
 
