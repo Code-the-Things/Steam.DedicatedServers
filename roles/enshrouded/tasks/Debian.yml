@@ -74,6 +74,16 @@
     mode: 0644
     force: true
 
+- name: Symlink Enshrouded Config
+  file:
+    src: /steam/morpheus/enshrouded_server.json
+    dest: /steam/server/enshrouded_server.json
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
 - name: Create start.sh file
   copy:
     content: |
