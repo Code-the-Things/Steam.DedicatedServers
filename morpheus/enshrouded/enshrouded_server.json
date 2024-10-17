@@ -3,7 +3,7 @@
     "password": "<%=customOptions.password%>",
     "saveDirectory": "./savegame",
     "logDirectory": "./logs",
-    "ip": "",
+    "ip": "0.0.0.0",
     "gamePort": "15636",
     "queryPort": "15637",
     "slotCount": 16
