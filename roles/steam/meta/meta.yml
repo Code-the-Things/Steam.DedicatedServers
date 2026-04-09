@@ -23,6 +23,7 @@ galaxy_info:
       - focal
       - bionic
       - jammy
+      - noble
 
   galaxy_tags:
     - steam
