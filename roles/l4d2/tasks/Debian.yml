@@ -1,8 +1,15 @@
 ---
-- name: Install L4D2
+- name: Fake Install L4D2 because of Bug
   shell:
     cmd: |
-      /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +@sSteamCmdForcePlatformType windows +app_update {{ SERVERID }} -validate +quit
+  become: true
+  become_user: steam
+
+- name: Real Install L4D2
+  shell:
+    cmd: |
+      /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +@sSteamCmdForcePlatformType linux +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 
