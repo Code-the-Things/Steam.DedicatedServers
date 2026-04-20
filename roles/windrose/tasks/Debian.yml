@@ -84,16 +84,9 @@
     mode: 0644
     force: true
 
-- name: Find game version directory under RocksDB
-  find:
-    paths: /steam/server/R5/Saved/SaveProfiles/Default/RocksDB
-    file_type: directory
-    recurse: no
-  register: rocksdb_dirs
-
 - name: Ensure Worlds/{{ WORLD }} directory exists
   file:
-    path: "{{ rocksdb_dirs.files[0].path }}/Worlds/{{ WORLD }}"
+    path: "/steam/server/R5/Saved/SaveProfiles/Default/RocksDB/{{ GAMEVERSION }}/Worlds/{{ WORLD }}"
     state: directory
     owner: steam
     group: steam
@@ -102,7 +95,7 @@
 - name: Symlink Windrose World Config
   file:
     src: /steam/morpheus/WorldDescription.json
-    dest: "{{ rocksdb_dirs.files[0].path }}/Worlds/{{ WORLD }}/WorldDescription.json"
+    dest: "/steam/server/R5/Saved/SaveProfiles/Default/RocksDB/{{ GAMEVERSION }}/Worlds/{{ WORLD }}/WorldDescription.json"
     state: link
     owner: steam
     group: steam
