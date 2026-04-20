@@ -10,6 +10,7 @@ The following Steam Dedicated Servers are supported:
 * Left 4 Dead 2 (L4D2)
 * Palworld
 * Valheim
+* Windrose
 
 Additional Steam Dedicated Servers can easily be added with minor variable changes.
 
