@@ -1,0 +1,14 @@
+---
+  METAVER: '1.12'
+  METASOURCE: 'mmsource-1.12.0-git1148-linux.tar.gz'
+  SOURCEMODSOURCE: 'sourcemod-1.12.0-git6923-linux.tar.gz'
+  SOURCEMODVER: '1.12'
+
+  #SERVERID: '4129620' # Windrose Dedicated Server
+  SERVERID: "{{ morpheus['customOptions']['steamAppId'] }}"
+
+  STEAMPORT: "{{ morpheus['customOptions']['steamPort'] }}"
+
+  INSTANCEID: "{{ morpheus['instance']['id'] }}"
+
+  WORLD: "{{ morpheus['customOptions']['world'] }}"

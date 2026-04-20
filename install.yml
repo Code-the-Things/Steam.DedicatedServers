@@ -26,5 +26,8 @@
           name: valheim
         when: SERVERTYPE == "Valheim"
       - include_role:
+          name: windrose
+        when: SERVERTYPE == "Windrose"
+      - include_role:
           name: backup
         when: (BACKUP != "None") and (BACKUP|length > 0)

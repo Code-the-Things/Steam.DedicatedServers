@@ -3,7 +3,7 @@
     "metadata": [
       {
         "name": "Application",
-        "value": "<%= (customOptions.layout == 5122) ? 'Valheim' : (customOptions.layout == 7092) ? 'Core Keeper' : (customOptions.layout == 8214) ? 'Palworld' : (customOptions.layout == 8223) ? 'Enshrouded' : 'L4D2' %>"
+        "value": "<%= (customOptions.layout == 5122) ? 'Valheim' : (customOptions.layout == 7092) ? 'Core Keeper' : (customOptions.layout == 8214) ? 'Palworld' : (customOptions.layout == 8223) ? 'Enshrouded' : (customOptions.layout == 8764) ? 'Windrose' : 'L4D2' %>"
       }
     ],
     "backup": {
@@ -16,7 +16,7 @@
       "userGroup": {
         "id": ""
       },
-      "tags": "<%= (customOptions.layout == 5122) ? 'Steam,Valheim,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) : (customOptions.layout == 7092) ? 'Steam,Core Keeper,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) : (customOptions.layout == 8214) ? 'Steam,Palworld,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) : (customOptions.layout == 8223) ? 'Steam,Enshrouded,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) : 'Steam,L4D2,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) %>",
+      "tags": "<%= (customOptions.layout == 5122) ? 'Steam,Valheim,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) : (customOptions.layout == 7092) ? 'Steam,Core Keeper,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) : (customOptions.layout == 8214) ? 'Steam,Palworld,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) : (customOptions.layout == 8223) ? 'Steam,Enshrouded,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) : (customOptions.layout == 8764) ? 'Steam,Windrose,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) : 'Steam,L4D2,Patch ' + (Math.abs(new Random().nextInt() % 3) + 1) %>",
       "networkDomain": {
         "id": 7
       }
@@ -24,7 +24,7 @@
     "defaultExpandAdvanced": false,
     "volumes": [
       {
-        "vId": 15713,
+        "vId": 23433,
         "controllerMountPoint": "22405:0:10:0",
         "volumeCustomizable": true,
         "readonlyName": false,
@@ -34,7 +34,7 @@
         "rootVolume": true,
         "minStorage": 5368709120,
         "storageType": 1,
-        "datastoreId": "auto",
+        "datastoreId": "autoCluster",
         "maxStorage": 107374182400
       }
     ],
@@ -76,16 +76,17 @@
       "smbiosAssetTag": null,
       "isEC2": false,
       "customOptions": {
-        "steamAppId": "<%= (customOptions.layout == 5122) ? '896660' : (customOptions.layout == 7092) ? '1963720' : (customOptions.layout == 8214) ? '2394010' : (customOptions.layout == 8223) ? '2278520' : '222860' %>",
+        "steamAppId": "<%= (customOptions.layout == 5122) ? '896660' : (customOptions.layout == 7092) ? '1963720' : (customOptions.layout == 8214) ? '2394010' : (customOptions.layout == 8223) ? '2278520' : (customOptions.layout == 8764) ? '4129620' :'222860' %>",
         "password": "<%=customOptions.password%>",
         "steamBackup": "<%=customOptions.steamBackup%>",
         "world": "<%=customOptions.world%>",
         "steamPort": "<%=customOptions.steamPort%>",
         "optionList": "<%=customOptions.optionList%>",
         "nfs": "<%=customOptions.nfs%>",
-        "newSteamBackup": "<%=customOptions.newSteamBackup%>"
+        "newSteamBackup": "<%=customOptions.newSteamBackup%>",
+        "skillLevel": "<%=customOptions.skillLevel%>"
       },
-      "resourcePoolId": "pool-2724",
+      "resourcePoolId": "pool-3807",
       "createUser": false,
       "nestedVirtualization": null,
       "vmwareFolderId": "<%= (customOptions.layout == 5122) ? 'group-v126' : (customOptions.layout == 7092) ? 'group-v127' : (customOptions.layout == 8214) ? 'group-v46682796' : (customOptions.layout == 8223) ? 'group-v46682795' : 'group-v125' %>",

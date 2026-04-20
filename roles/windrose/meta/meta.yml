@@ -1,7 +1,7 @@
 galaxy_info:
-  role_name: enshrouded
+  role_name: windrose
   author: Chris Bunge
-  description: Installs Enshrouded Steam Dedicated Servers on Ubuntu Hosts
+  description: Installs Windrose Steam Dedicated Servers on Ubuntu Hosts
   company: Code the Things
 
   # Some suggested licenses:
@@ -25,6 +25,6 @@ galaxy_info:
       - jammy
 
   galaxy_tags:
-    - enshrouded
+    - windrose
     - steam
     - gaming
