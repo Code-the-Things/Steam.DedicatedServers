@@ -1,0 +1,10 @@
+{
+	"Version": 1,
+	"WorldDescription":
+	{
+		"islandId": "<%=server.uuid%>",
+		"WorldName": "<%=customOptions.world%>",
+		"WorldPresetType": "<%=customOptions.skillLevel%>",
+		"WorldSettings":{}
+	}
+}

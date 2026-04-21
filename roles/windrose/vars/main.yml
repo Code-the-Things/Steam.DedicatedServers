@@ -1,8 +1,6 @@
 ---
   GAME_PATH: "{{ morpheus['customOptions']['gamePath'] }}"
 
-  GAMEVERSION: '0.10.0'
-
   #SERVERID: '4129620' # Windrose Dedicated Server
   SERVERID: "{{ morpheus['customOptions']['steamAppId'] }}"
 

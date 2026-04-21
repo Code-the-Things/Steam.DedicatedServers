@@ -34,29 +34,11 @@
     mode: 0644
     force: true
 
-- name: Ensure Worlds/{{ WORLD }} directory exists
-  file:
-    path: "{{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB/{{ GAMEVERSION }}/Worlds/{{ WORLD }}"
-    state: directory
-    owner: steam
-    group: steam
-    mode: '0755'
-
-- name: Symlink Windrose World Config
-  file:
-    src: /steam/morpheus/WorldDescription.json
-    dest: "{{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB/{{ GAMEVERSION }}/Worlds/{{ WORLD }}/WorldDescription.json"
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
 - name: Create start.sh file
   copy:
     content: |
       #!/bin/bash
-      wine start {{ GAME_PATH }}/StartServerForeground.bat
+      wine cmd /c '{{ GAME_PATH }}\StartServerForeground.bat'
     dest: /steam/start.sh
     mode: '0755'
 
@@ -66,6 +48,44 @@
     owner: steam
     group: steam
     recurse: true
+
+- name: Start server once to generate version data
+  shell: |
+    screen -dmS steam_init /steam/start.sh
+    sleep 10
+    wineserver -k
+    screen -S steam_init -X quit
+  become: true
+  become_user: steam
+  ignore_errors: true
+
+- name: Detect GAMEVERSION from ServerDescription.json
+  shell: |
+    grep -o '"DeploymentId": *"[^"]*"' {{ GAME_PATH }}/R5/ServerDescription.json \
+      | grep -o '"[0-9][^"]*"' \
+      | tr -d '"' \
+      | cut -d'.' -f1-3
+  register: detected_gameversion
+  become: true
+  become_user: steam
+
+- name: Ensure Worlds/{{ WORLD }} directory exists
+  file:
+    path: "{{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB/{{ detected_gameversion.stdout }}/Worlds/{{ WORLD }}"
+    state: directory
+    owner: steam
+    group: steam
+    mode: '0755'
+
+- name: Symlink Windrose World Config
+  file:
+    src: /steam/morpheus/WorldDescription.json
+    dest: "{{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB/{{ detected_gameversion.stdout }}/Worlds/{{ WORLD }}/WorldDescription.json"
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
 
 - name: Start Screen Session
   shell: |
