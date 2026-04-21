@@ -51,13 +51,18 @@
 
 - name: Start server once to generate world data
   shell: |
-    screen -dmS steam_init /steam/start.sh
-    sleep 10
+    /steam/start.sh &
+    sleep 30
     wineserver -k
-    screen -S steam_init -X quit
   become: true
   become_user: steam
   ignore_errors: true
+
+- name: Wait for RocksDB directory to be created
+  wait_for:
+    path: "{{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB"
+    state: present
+    timeout: 30
 
 - name: Detect WorldIslandId from generated Worlds directory
   shell: |
