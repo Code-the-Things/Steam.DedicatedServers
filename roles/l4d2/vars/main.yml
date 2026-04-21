@@ -1,5 +1,6 @@
 ---
   GAME_PATH: "{{ morpheus['customOptions']['gamePath'] }}"
+  META_PATH: "/left4dead2/addons"
 
   #SERVERID: '222860'
   SERVERID: "{{ morpheus['customOptions']['steamAppId'] }}"

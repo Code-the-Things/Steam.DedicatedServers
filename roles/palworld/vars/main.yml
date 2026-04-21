@@ -1,5 +1,6 @@
 ---
   GAME_PATH: "{{ morpheus['customOptions']['gamePath'] }}"
+  META_PATH: "/Pal/Content/Paks"
 
   #SERVERID: '2394010'
   SERVERID: "{{ morpheus['customOptions']['steamAppId'] }}"

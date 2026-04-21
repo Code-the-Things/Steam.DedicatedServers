@@ -2,7 +2,7 @@
 - name: Install Palworld
   shell:
     cmd: |
-      /usr/games/steamcmd +@ShutdownOnFailedCommand 0 +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +@ShutdownOnFailedCommand 0 +force_install_dir '{{ GAME_PATH }}' +login anonymous +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 
@@ -10,39 +10,9 @@
   import_role:
     name: metamod
 
-- name: Symlink Banned User Config
-  file:
-    src: /steam/morpheus/banned_user.cfg
-    dest: /steam/server/cfg/banned_user.cfg
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
-- name: Symlink Banned IP Config
-  file:
-    src: /steam/morpheus/banned_ip.cfg
-    dest: /steam/server/cfg/banned_ip.cfg
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
-- name: Symlink Admin Config
-  file:
-    src: /steam/morpheus/admins_simple.ini
-    dest: /steam/server/addons/sourcemod/configs/admins_simple.ini
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
 - name: Symlink Start Script
   file:
-    src: /steam/server/PalServer.sh
+    src: "{{ GAME_PATH }}/PalServer.sh"
     dest: /steam/start.sh
     state: link
     owner: steam
@@ -58,12 +28,12 @@
     group: steam
     mode: 0777
   loop:
-    - /steam/server/Pal/Saved/Config/LinuxServer
+    - "{{ GAME_PATH }}/Pal/Saved/Config/LinuxServer"
 
 - name: Symlink Server Config
   file:
     src: /steam/morpheus/PalWorldSettings.ini
-    dest: /steam/server/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+    dest: "{{ GAME_PATH }}/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
     state: link
     owner: steam
     group: steam

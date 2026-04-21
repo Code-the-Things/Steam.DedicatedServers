@@ -6,48 +6,14 @@
 - name: Install Windrose Dedicated Server
   shell:
     cmd: |
-      /usr/games/steamcmd +@ShutdownOnFailedCommand 0 +@sSteamCmdForcePlatformType windows +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +@ShutdownOnFailedCommand 0 +@sSteamCmdForcePlatformType windows +force_install_dir '{{ GAME_PATH }}' +login anonymous +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
-
-- name: Install Metamod and Sourcemod
-  import_role:
-    name: metamod
-
-- name: Symlink Banned User Config
-  file:
-    src: /steam/morpheus/banned_user.cfg
-    dest: /steam/server/cfg/banned_user.cfg
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
-- name: Symlink Banned IP Config
-  file:
-    src: /steam/morpheus/banned_ip.cfg
-    dest: /steam/server/cfg/banned_ip.cfg
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
-- name: Symlink Admin Config
-  file:
-    src: /steam/morpheus/admins_simple.ini
-    dest: /steam/server/addons/sourcemod/configs/admins_simple.ini
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
 
 - name: Symlink Windrose Server Config
   file:
     src: /steam/morpheus/ServerDescription.json
-    dest: /steam/server/R5/ServerDescription.json
+    dest: "{{ GAME_PATH }}/R5/ServerDescription.json"
     state: link
     owner: steam
     group: steam
@@ -56,7 +22,7 @@
 
 - name: Ensure Worlds/{{ WORLD }} directory exists
   file:
-    path: "/steam/server/R5/Saved/SaveProfiles/Default/RocksDB/{{ GAMEVERSION }}/Worlds/{{ WORLD }}"
+    path: "{{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB/{{ GAMEVERSION }}/Worlds/{{ WORLD }}"
     state: directory
     owner: steam
     group: steam
@@ -65,7 +31,7 @@
 - name: Symlink Windrose World Config
   file:
     src: /steam/morpheus/WorldDescription.json
-    dest: "/steam/server/R5/Saved/SaveProfiles/Default/RocksDB/{{ GAMEVERSION }}/Worlds/{{ WORLD }}/WorldDescription.json"
+    dest: "{{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB/{{ GAMEVERSION }}/Worlds/{{ WORLD }}/WorldDescription.json"
     state: link
     owner: steam
     group: steam
@@ -76,7 +42,7 @@
   copy:
     content: |
       #!/bin/bash
-      wine start /steam/server/StartServerForeground.bat
+      wine start {{ GAME_PATH }}/StartServerForeground.bat
     dest: /steam/start.sh
     mode: '0755'
 

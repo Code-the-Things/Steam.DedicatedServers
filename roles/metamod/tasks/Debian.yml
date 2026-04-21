@@ -2,7 +2,7 @@
 - name: Install Metamod
   ansible.builtin.unarchive:
     src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
-    dest: "{{ GAME_PATH }}"
+    dest: "{{ GAME_PATH }}{{ META_PATH }}"
     remote_src: yes
   become: true
   become_user: steam
@@ -10,7 +10,37 @@
 - name: Install Sourcemod
   ansible.builtin.unarchive:
     src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
-    dest: "{{ GAME_PATH }}"
+    dest: "{{ GAME_PATH }}{{ META_PATH }}"
     remote_src: yes
   become: true
   become_user: steam
+
+- name: Symlink Banned User Config
+  file:
+    src: /steam/morpheus/banned_user.cfg
+    dest: "{{ GAME_PATH }}{{ META_PATH }}/cfg/banned_user.cfg"
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Symlink Banned IP Config
+  file:
+    src: /steam/morpheus/banned_ip.cfg
+    dest: "{{ GAME_PATH }}{{ META_PATH }}/cfg/banned_ip.cfg"
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true
+
+- name: Symlink Admin Config
+  file:
+    src: /steam/morpheus/admins_simple.ini
+    dest: "{{ GAME_PATH }}{{ META_PATH }}/addons/sourcemod/configs/admins_simple.ini"
+    state: link
+    owner: steam
+    group: steam
+    mode: 0644
+    force: true

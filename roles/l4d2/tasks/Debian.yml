@@ -27,26 +27,6 @@
     mode: 0644
     force: true
 
-- name: Symlink Banned User Config
-  file:
-    src: /steam/morpheus/banned_user.cfg
-    dest: "{{ GAME_PATH }}/left4dead2/cfg/banned_user.cfg"
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
-- name: Symlink Banned IP Config
-  file:
-    src: /steam/morpheus/banned_ip.cfg
-    dest: "{{ GAME_PATH }}/left4dead2/cfg/banned_ip.cfg"
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
 - name: Symlink MOTD Config
   file:
     src: /steam/morpheus/motd.txt
@@ -61,16 +41,6 @@
   file:
     src: /steam/morpheus/host.txt
     dest: "{{ GAME_PATH }}/left4dead2/host.txt"
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
-- name: Symlink Admin Config
-  file:
-    src: /steam/morpheus/admins_simple.ini
-    dest: "{{ GAME_PATH }}/left4dead2/addons/sourcemod/configs/admins_simple.ini"
     state: link
     owner: steam
     group: steam

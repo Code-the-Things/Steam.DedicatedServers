@@ -6,48 +6,14 @@
 - name: Install Enshrouded
   shell:
     cmd: |
-      /usr/games/steamcmd +@ShutdownOnFailedCommand 0 +@sSteamCmdForcePlatformType windows +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +@ShutdownOnFailedCommand 0 +@sSteamCmdForcePlatformType windows +force_install_dir '{{ GAME_PATH }}' +login anonymous +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
-
-- name: Install Metamod and Sourcemod
-  import_role:
-    name: metamod
-
-- name: Symlink Banned User Config
-  file:
-    src: /steam/morpheus/banned_user.cfg
-    dest: /steam/server/cfg/banned_user.cfg
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
-- name: Symlink Banned IP Config
-  file:
-    src: /steam/morpheus/banned_ip.cfg
-    dest: /steam/server/cfg/banned_ip.cfg
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
-
-- name: Symlink Admin Config
-  file:
-    src: /steam/morpheus/admins_simple.ini
-    dest: /steam/server/addons/sourcemod/configs/admins_simple.ini
-    state: link
-    owner: steam
-    group: steam
-    mode: 0644
-    force: true
 
 - name: Symlink Enshrouded Config
   file:
     src: /steam/morpheus/enshrouded_server.json
-    dest: /steam/server/enshrouded_server.json
+    dest: "{{ GAME_PATH }}/enshrouded_server.json"
     state: link
     owner: steam
     group: steam
@@ -58,7 +24,7 @@
   copy:
     content: |
       #!/bin/bash
-      wine start /steam/server/enshrouded_server.exe
+      wine start {{ GAME_PATH }}/enshrouded_server.exe
     dest: /steam/start.sh
     mode: '0755'
 
