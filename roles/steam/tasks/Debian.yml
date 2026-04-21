@@ -94,3 +94,10 @@
     loop:
       - /root/.steam/sdk64/steamclient.so
       - /home/steam/.steam/sdk64/steamclient.so
+
+  - name: Bootstrap steamcmd to initialize config
+    shell:
+      cmd: /usr/games/steamcmd +quit
+    become: true
+    become_user: steam
+    ignore_errors: true

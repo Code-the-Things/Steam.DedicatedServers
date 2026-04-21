@@ -11,10 +11,16 @@
     group: steam
     mode: '0755'
 
+- name: Steamcmd login anonymous
+  shell:
+    cmd: /usr/games/steamcmd +login anonymous +quit
+  become: true
+  become_user: steam
+
 - name: Install Windrose Dedicated Server
   shell:
     cmd: |
-      /usr/games/steamcmd +@sSteamCmdForcePlatformType windows +force_install_dir '{{ GAME_PATH }}' +login anonymous +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +@sSteamCmdForcePlatformType windows +force_install_dir '{{ GAME_PATH }}' +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 

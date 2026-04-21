@@ -7,17 +7,23 @@
     group: steam
     mode: '0755'
 
+- name: Steamcmd login anonymous
+  shell:
+    cmd: /usr/games/steamcmd +login anonymous +quit
+  become: true
+  become_user: steam
+
 - name: Install L4D2 Fake (Bug Related)
   shell:
     cmd: |
-      /usr/games/steamcmd +force_install_dir '{{ GAME_PATH }}' +login anonymous +@sSteamCmdForcePlatformType windows +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +force_install_dir '{{ GAME_PATH }}' +@sSteamCmdForcePlatformType windows +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 
 - name: Install L4D2 Fix
   shell:
     cmd: |
-      /usr/games/steamcmd +force_install_dir '{{ GAME_PATH }}' +login anonymous +@sSteamCmdForcePlatformType linux +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +force_install_dir '{{ GAME_PATH }}' +@sSteamCmdForcePlatformType linux +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 
