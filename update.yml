@@ -5,6 +5,7 @@
     become: true
     vars:
       SERVERID: "{{ morpheus['customOptions']['steamAppId'] }}"
+      GAME_PATH: "{{ morpheus['customOptions']['gamePath'] | default('/steam/server') or '/steam/server' }}"
 
     tasks:
       - name: Stop Screen Session
@@ -14,10 +15,16 @@
         become: true
         become_user: steam
 
+      - name: Steamcmd login anonymous
+        shell:
+          cmd: /usr/games/steamcmd +login anonymous +quit
+        become: true
+        become_user: steam
+
       - name: Update Steam Dedicated Server
         shell:
           cmd: |
-            /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +app_update {{ SERVERID }} -validate +quit
+            /usr/games/steamcmd +force_install_dir '{{ GAME_PATH }}' +app_update {{ SERVERID }} -validate +quit
         become: true
         become_user: steam
 
