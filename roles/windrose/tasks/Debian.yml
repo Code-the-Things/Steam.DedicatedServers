@@ -52,7 +52,7 @@
 - name: Start server once to generate world data
   shell: |
     /steam/start.sh &
-    sleep 30
+    sleep 60
     wineserver -k
   become: true
   become_user: steam
