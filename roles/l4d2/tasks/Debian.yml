@@ -1,38 +1,19 @@
 ---
-- name: Fake Install L4D2 because of Bug
+- name: Install L4D2
   shell:
     cmd: |
-      /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +@sSteamCmdForcePlatformType windows +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +@ShutdownOnFailedCommand 0 +force_install_dir '{{ GAME_PATH }}' +login anonymous +@sSteamCmdForcePlatformType linux +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 
-- name: Real Install L4D2
-  shell:
-    cmd: |
-      /usr/games/steamcmd +force_install_dir '/steam/server' +login anonymous +@sSteamCmdForcePlatformType linux +app_update {{ SERVERID }} -validate +quit
-  become: true
-  become_user: steam
-
-- name: Install Metamod
-  ansible.builtin.unarchive:
-    src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
-    dest: /steam/server/left4dead2
-    remote_src: yes
-  become: true
-  become_user: steam
-
-- name: Install Sourcemod
-  ansible.builtin.unarchive:
-    src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
-    dest: /steam/server/left4dead2
-    remote_src: yes
-  become: true
-  become_user: steam
+- name: Install Metamod and Sourcemod
+  import_role:
+    name: metamod
 
 - name: Symlink Server Config
   file:
     src: /steam/morpheus/server.cfg
-    dest: /steam/server/left4dead2/cfg/server.cfg
+    dest: "{{ GAME_PATH }}/left4dead2/cfg/server.cfg"
     state: link
     owner: steam
     group: steam
@@ -42,7 +23,7 @@
 - name: Symlink Banned User Config
   file:
     src: /steam/morpheus/banned_user.cfg
-    dest: /steam/server/left4dead2/cfg/banned_user.cfg
+    dest: "{{ GAME_PATH }}/left4dead2/cfg/banned_user.cfg"
     state: link
     owner: steam
     group: steam
@@ -52,7 +33,7 @@
 - name: Symlink Banned IP Config
   file:
     src: /steam/morpheus/banned_ip.cfg
-    dest: /steam/server/left4dead2/cfg/banned_ip.cfg
+    dest: "{{ GAME_PATH }}/left4dead2/cfg/banned_ip.cfg"
     state: link
     owner: steam
     group: steam
@@ -62,7 +43,7 @@
 - name: Symlink MOTD Config
   file:
     src: /steam/morpheus/motd.txt
-    dest: /steam/server/left4dead2/motd.txt
+    dest: "{{ GAME_PATH }}/left4dead2/motd.txt"
     state: link
     owner: steam
     group: steam
@@ -72,7 +53,7 @@
 - name: Symlink Host Config
   file:
     src: /steam/morpheus/host.txt
-    dest: /steam/server/left4dead2/host.txt
+    dest: "{{ GAME_PATH }}/left4dead2/host.txt"
     state: link
     owner: steam
     group: steam
@@ -82,7 +63,7 @@
 - name: Symlink Admin Config
   file:
     src: /steam/morpheus/admins_simple.ini
-    dest: /steam/server/left4dead2/addons/sourcemod/configs/admins_simple.ini
+    dest: "{{ GAME_PATH }}/left4dead2/addons/sourcemod/configs/admins_simple.ini"
     state: link
     owner: steam
     group: steam
@@ -93,7 +74,7 @@
   copy:
     dest: /steam/start.sh
     content: |
-      /steam/server/srcds_run -game left4dead2 +exec server.cfg +port {{ STEAMPORT }} +maxplayers 8 -tickrate 100 -pingboost 2 +map c1m1_hotel > /dev/null 2>&1 &
+      {{ GAME_PATH }}/srcds_run -game left4dead2 +exec server.cfg +port {{ STEAMPORT }} +maxplayers 8 -tickrate 100 -pingboost 2 +map c1m1_hotel > /dev/null 2>&1 &
     mode: a+x
 
 - name: Fix File Permissions

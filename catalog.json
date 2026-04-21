@@ -84,7 +84,9 @@
         "optionList": "<%=customOptions.optionList%>",
         "nfs": "<%=customOptions.nfs%>",
         "newSteamBackup": "<%=customOptions.newSteamBackup%>",
-        "skillLevel": "<%=customOptions.skillLevel%>"
+        "skillLevel": "<%=customOptions.skillLevel%>",
+        "playerCount": "<%=customOptions.playerCount%>",
+        "gamePath": "<%=customOptions.gamePath%>"
       },
       "resourcePoolId": "pool-3807",
       "createUser": false,

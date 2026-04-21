@@ -1,0 +1,22 @@
+---
+- name: Create directory for keyrings
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Import WineHQ GPG key
+  apt_key:
+    url: https://dl.winehq.org/wine-builds/winehq.key
+    state: present
+
+- name: Add WineHQ repository
+  apt_repository:
+    repo: "deb https://dl.winehq.org/wine-builds/ubuntu/ {{ ansible_lsb.codename }} main"
+
+- name: Install WineHQ stable
+  apt:
+    name: winehq-stable
+    state: present
+    install_recommends: yes
+    update_cache: yes

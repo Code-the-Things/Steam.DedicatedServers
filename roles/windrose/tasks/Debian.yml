@@ -1,25 +1,7 @@
 ---
-- name: Create directory for keyrings
-  file:
-    path: /etc/apt/keyrings
-    state: directory
-    mode: '0755'
-
-- name: Import WineHQ GPG key
-  apt_key:
-    url: https://dl.winehq.org/wine-builds/winehq.key
-    state: present
-
-- name: Add WineHQ repository
-  apt_repository:
-    repo: "deb https://dl.winehq.org/wine-builds/ubuntu/ {{ ansible_lsb.codename }} main"
-
-- name: Install WineHQ stable
-  apt:
-    name: winehq-stable
-    state: present
-    install_recommends: yes
-    update_cache: yes
+- name: Install Wine
+  import_role:
+    name: wine
 
 - name: Install Windrose Dedicated Server
   shell:
@@ -28,21 +10,9 @@
   become: true
   become_user: steam
 
-- name: Install Metamod
-  ansible.builtin.unarchive:
-    src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
-    dest: /steam/server
-    remote_src: yes
-  become: true
-  become_user: steam
-
-- name: Install Sourcemod
-  ansible.builtin.unarchive:
-    src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
-    dest: /steam/server
-    remote_src: yes
-  become: true
-  become_user: steam
+- name: Install Metamod and Sourcemod
+  import_role:
+    name: metamod
 
 - name: Symlink Banned User Config
   file:
@@ -106,7 +76,7 @@
   copy:
     content: |
       #!/bin/bash
-      wine64 /steam/server/WindroseServer.exe
+      wine start /steam/server/StartServerForeground.bat
     dest: /steam/start.sh
     mode: '0755'
 

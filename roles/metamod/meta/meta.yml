@@ -1,0 +1,19 @@
+galaxy_info:
+  role_name: metamod
+  author: Chris Bunge
+  description: Installs Metamod and Sourcemod on Steam Dedicated Servers
+  company: Code the Things
+  license: license (GPLv2, CC-BY, etc)
+  min_ansible_version: 2.9
+  github_branch: main
+  platforms:
+    - name: Ubuntu
+      versions:
+      - focal
+      - bionic
+      - jammy
+      - noble
+  galaxy_tags:
+    - metamod
+    - sourcemod
+    - steam

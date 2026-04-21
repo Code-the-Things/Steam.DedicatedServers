@@ -1,0 +1,16 @@
+---
+- name: Install Metamod
+  ansible.builtin.unarchive:
+    src: https://mms.alliedmods.net/mmsdrop/{{ METAVER }}/{{ METASOURCE }}
+    dest: "{{ GAME_PATH }}"
+    remote_src: yes
+  become: true
+  become_user: steam
+
+- name: Install Sourcemod
+  ansible.builtin.unarchive:
+    src: https://sm.alliedmods.net/smdrop/{{ SOURCEMODVER }}/{{ SOURCEMODSOURCE }}
+    dest: "{{ GAME_PATH }}"
+    remote_src: yes
+  become: true
+  become_user: steam

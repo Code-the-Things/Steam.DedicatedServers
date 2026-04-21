@@ -1,8 +1,5 @@
 ---
-  METAVER: '1.11'
-  METASOURCE: 'mmsource-1.11.0-git1148-linux.tar.gz'
-  SOURCEMODSOURCE: 'sourcemod-1.11.0-git6923-linux.tar.gz'
-  SOURCEMODVER: '1.11'
+  GAME_PATH: "{{ morpheus['customOptions']['gamePath'] }}"
 
   #SERVERID: '1963720'
   SERVERID: "{{ morpheus['customOptions']['steamAppId'] }}"
