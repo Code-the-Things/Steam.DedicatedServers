@@ -49,7 +49,7 @@
     group: steam
     recurse: true
 
-- name: Start server once to generate version data
+- name: Start server once to generate world data
   shell: |
     screen -dmS steam_init /steam/start.sh
     sleep 10
@@ -59,33 +59,40 @@
   become_user: steam
   ignore_errors: true
 
-- name: Detect GAMEVERSION from ServerDescription.json
+- name: Detect WorldIslandId from generated Worlds directory
   shell: |
-    grep -o '"DeploymentId": *"[^"]*"' {{ GAME_PATH }}/R5/ServerDescription.json \
-      | grep -o '"[0-9][^"]*"' \
-      | tr -d '"' \
-      | cut -d'.' -f1-3
-  register: detected_gameversion
+    find {{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB -mindepth 2 -maxdepth 2 -type d -name 'Worlds' \
+      | head -1 \
+      | xargs -I{} find {} -mindepth 1 -maxdepth 1 -type d \
+      | head -1 \
+      | xargs basename
+  register: detected_world_id
   become: true
   become_user: steam
 
-- name: Ensure Worlds/{{ WORLD }} directory exists
-  file:
-    path: "{{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB/{{ detected_gameversion.stdout }}/Worlds/{{ WORLD }}"
-    state: directory
-    owner: steam
-    group: steam
-    mode: '0755'
+- name: Detect RocksDB version path
+  shell: |
+    find {{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB -mindepth 1 -maxdepth 1 -type d | head -1
+  register: detected_rocksdb_path
+  become: true
+  become_user: steam
 
 - name: Symlink Windrose World Config
   file:
     src: /steam/morpheus/WorldDescription.json
-    dest: "{{ GAME_PATH }}/R5/Saved/SaveProfiles/Default/RocksDB/{{ detected_gameversion.stdout }}/Worlds/{{ WORLD }}/WorldDescription.json"
+    dest: "{{ detected_rocksdb_path.stdout }}/Worlds/{{ detected_world_id.stdout }}/WorldDescription.json"
     state: link
     owner: steam
     group: steam
     mode: 0644
     force: true
+
+- name: Update WorldDescription.json islandId with detected WorldIslandId
+  shell: |
+    contents=$(jq --arg id "{{ detected_world_id.stdout }}" '.islandId = $id' /steam/morpheus/WorldDescription.json) \
+      && echo "$contents" > /steam/morpheus/WorldDescription.json
+  become: true
+  become_user: steam
 
 - name: Start Screen Session
   shell: |
