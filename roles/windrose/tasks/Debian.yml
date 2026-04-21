@@ -20,7 +20,7 @@
 - name: Install Windrose Dedicated Server
   shell:
     cmd: |
-      /usr/games/steamcmd +@sSteamCmdForcePlatformType windows +force_install_dir '{{ GAME_PATH }}' +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +@sSteamCmdForcePlatformType windows +force_install_dir '{{ GAME_PATH }}' +login anonymous +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 

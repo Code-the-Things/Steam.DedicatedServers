@@ -24,7 +24,7 @@
       - name: Update Steam Dedicated Server
         shell:
           cmd: |
-            /usr/games/steamcmd +force_install_dir '{{ GAME_PATH }}' +app_update {{ SERVERID }} -validate +quit
+            /usr/games/steamcmd +force_install_dir '{{ GAME_PATH }}' +login anonymous +app_update {{ SERVERID }} -validate +quit
         become: true
         become_user: steam
 
