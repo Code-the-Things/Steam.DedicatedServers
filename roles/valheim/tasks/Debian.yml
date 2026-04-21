@@ -7,10 +7,18 @@
       - libc6
     state: present
 
+- name: Create game install directory
+  file:
+    path: "{{ GAME_PATH }}"
+    state: directory
+    owner: steam
+    group: steam
+    mode: '0755'
+
 - name: Install Valheim
   shell:
     cmd: |
-      /usr/games/steamcmd +@ShutdownOnFailedCommand 0 +@sSteamCmdForcePlatformType linux +force_install_dir '{{ GAME_PATH }}' +login anonymous +app_update {{ SERVERID }} -validate +quit
+      /usr/games/steamcmd +@sSteamCmdForcePlatformType linux +force_install_dir '{{ GAME_PATH }}' +login anonymous +app_update {{ SERVERID }} -validate +quit
   become: true
   become_user: steam
 
